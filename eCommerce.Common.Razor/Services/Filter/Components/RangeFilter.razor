@@ -1,0 +1,9 @@
+﻿@if(Filter is not null)
+{
+    <input type="range" min="@Filter.MinValue" max="@Filter.MaxValue" @bind="Filter.SelectedValue" />
+}
+
+@code {
+    [Parameter]
+    public FilterModel? Filter { get; set; }
+}

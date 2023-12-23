@@ -1,0 +1,12 @@
+﻿@if (Filter is not null)
+{
+    <label>
+        <input type="checkbox" @bind="Filter.IsSelected" />
+        @Filter.Name
+    </label>
+}
+
+@code {
+    [Parameter]
+    public FilterModel? Filter { get; set; }
+}

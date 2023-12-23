@@ -1,0 +1,17 @@
+﻿@if (Filter is not null)
+{
+    <EditForm Model="Filter">
+        <InputRadioGroup @bind-Value="Filter.SelectedValue">
+            @foreach (var option in Filter.Options)
+            {
+                @* Change .valid.modified:not([type = checkbox]) in app.css to remove square around radiobuttons*@
+                <InputRadio class="outline-none" Value="@option.Id" />@option.Name
+            }
+        </InputRadioGroup>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public FilterModel? Filter { get; set; }
+}
