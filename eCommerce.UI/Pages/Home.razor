@@ -4,22 +4,44 @@
 
 <h1>eCommerce</h1>
 
-<FilterComponent FilterGroup="CheckboxFilterGroup"></FilterComponent>
+@foreach(var filter in FilterGroups)
+{
+    <FilterComponent FilterGroup="filter"></FilterComponent>
+}
 @* <FilterComponent Filters="RadioFilters"></FilterComponent>
 <FilterComponent Filters="RangeFilters"></FilterComponent>
  *@
 <button @onclick="FilterProducts">Apply Filter</button>
 
 @code {
-    FilterGroupModel CheckboxFilterGroup = new()
+    List<FilterGroup> FilterGroups = new()
     {
-        Id = 1,
-        Name = "Group 1",
-        FilterOptions = new()
-        {
-            new (1, "Option 1", FilterType.Checkbox),
-            new (2, "Option 2", FilterType.Checkbox, true)
+        new() {
+            Id = 1,
+            Name = "Group 1",
+            FilterOptions = new()
+            {
+                new (1, "Option 1", FilterType.Checkbox),
+                new (2, "Option 2", FilterType.Checkbox, true)
+            }
+        },
+        new() {
+            Id = 2,
+            Name = "Group 2",
+            FilterOptions = new()
+            {
+                new (3, "Radios", FilterType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") }, 2)
+            }
+        },
+        new() {
+            Id = 3,
+            Name = "Group 3",
+            FilterOptions = new()
+            {
+                new (4, "Range", FilterType.Range, 1, 100, 1)
+            }
         }
+
     };
 
     /*List<FilterOption> CheckboxFilters = new()

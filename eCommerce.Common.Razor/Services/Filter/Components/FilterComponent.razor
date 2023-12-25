@@ -1,12 +1,12 @@
 ﻿@inject FilterRenderingService FilterRenderer
 
-<section class="d-flex flex-column m-2 border border-secondary-subtle" style="min-width:160px; max-width:260px;">
-    <div class="text-center text-light w-100 mb-2 py-2 border-bottom border-secondary-subtle bg-primary">@FilterGroup.Name</div>
+<section class="d-flex flex-column m-2 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
+    <div class="h6 text-center text-light w-100 mb-2 py-2 border-bottom border-secondary-subtle bg-primary">@FilterGroup.Name</div>
     @FilterRenderer.RenderFilters(FilterGroup.FilterOptions)
 </section>
 
 @code {
     [Parameter]
-    public FilterGroupModel FilterGroup { get; set; } = new();
+    public FilterGroup FilterGroup { get; set; } = new();
     //public List<FilterOption> Filters { get; set; } = new();
 }

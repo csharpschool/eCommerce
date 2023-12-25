@@ -12,6 +12,6 @@ public class FilterOption
     public int MaxValue { get; set; } // Used for Range
 
     public FilterOption(int id, string name, FilterType filterType, bool isSelected = false) => (Id, Name, FilterType, IsSelected) = (id, name, filterType, isSelected);
-    public FilterOption(int id, string name, FilterType filterType, List<RadioModel> options) => (Id, Name, FilterType, Options) = (id, name, filterType, options);
-    public FilterOption(int id, string name, FilterType filterType, int min, int max) => (Id, Name, FilterType, MinValue, MaxValue) = (id, name, filterType, min, max);
+    public FilterOption(int id, string name, FilterType filterType, List<RadioModel> options, int selected) => (Id, Name, FilterType, Options, SelectedValue) = (id, name, filterType, options, selected);
+    public FilterOption(int id, string name, FilterType filterType, int min, int max, int value) => (Id, Name, FilterType, MinValue, MaxValue, SelectedValue) = (id, name, filterType, min, max, value);
 }
