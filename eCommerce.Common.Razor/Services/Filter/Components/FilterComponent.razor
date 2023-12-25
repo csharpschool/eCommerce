@@ -1,7 +1,7 @@
 ﻿@inject FilterRenderingService FilterRenderer
 
-<section class="d-flex flex-column m-2 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
-    <div class="h6 text-center text-light w-100 mb-2 py-2 border-bottom border-secondary-subtle bg-primary">@FilterGroup.Name</div>
+<section class="d-flex flex-column my-2 border border-secondary-subtle">
+    <div class="h6 text-center text-light w-100 py-2 border-bottom border-secondary-subtle bg-primary">@FilterGroup.Name</div>
     @FilterRenderer.RenderFilters(FilterGroup.FilterOptions)
 </section>
 

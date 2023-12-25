@@ -4,14 +4,14 @@
 
 <h1>eCommerce</h1>
 
-@foreach(var filter in FilterGroups)
-{
-    <FilterComponent FilterGroup="filter"></FilterComponent>
-}
-@* <FilterComponent Filters="RadioFilters"></FilterComponent>
-<FilterComponent Filters="RangeFilters"></FilterComponent>
- *@
-<button @onclick="FilterProducts">Apply Filter</button>
+<div class="d-flex flex-column m-2 p-2 pt-0 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
+    @foreach(var group in FilterGroups)
+    {
+        <FilterComponent FilterGroup="group"></FilterComponent>
+    }
+
+    <button class="btn btn-outline-primary rounded-0 mt-2" @onclick="FilterProducts">Apply Filter</button>
+</div>
 
 @code {
     List<FilterGroup> FilterGroups = new()
@@ -43,23 +43,6 @@
         }
 
     };
-
-    /*List<FilterOption> CheckboxFilters = new()
-    {
-        new (1, "Option 1", FilterType.Checkbox),
-        new (2, "Option 2", FilterType.Checkbox, true)
-    };
-
-    List<FilterOption> RadioFilters = new()
-    {
-        new (3, "Radios", FilterType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") })
-    };
-
-    List<FilterOption> RangeFilters = new()
-    {
-        new (4, "Range", FilterType.Range, 1, 100)
-    };*/
-
 
     private async Task FilterProducts(MouseEventArgs e)
     {
