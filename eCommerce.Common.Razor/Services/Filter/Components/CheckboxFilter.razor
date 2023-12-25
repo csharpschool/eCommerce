@@ -1,12 +1,12 @@
 ﻿@if (Filter is not null)
 {
-    <label>
+    <div class="ps-2 pb-1">
         <input type="checkbox" @bind="Filter.IsSelected" />
         @Filter.Name
-    </label>
+    </div>
 }
 
 @code {
     [Parameter]
-    public FilterModel? Filter { get; set; }
+    public FilterOption? Filter { get; set; }
 }

@@ -11,7 +11,7 @@ public class FilterRenderingService
             { FilterType.Range, typeof(RangeFilter) }
         };
 
-    public RenderFragment RenderFilter(FilterModel filter)
+    public RenderFragment RenderFilter(FilterOption filter)
     {
         return builder =>
         {
@@ -24,7 +24,7 @@ public class FilterRenderingService
             }
         };
     }
-    public RenderFragment RenderFilters(List<FilterModel> filters)
+    public RenderFragment RenderFilters(List<FilterOption> filters)
     {
         return builder =>
         {
