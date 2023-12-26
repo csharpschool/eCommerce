@@ -5,6 +5,8 @@
 <h1>eCommerce</h1>
 
 <div class="d-flex flex-column m-2 p-2 pt-0 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
+    <LinkComponent LinkGroup="linkGroup" OnLinkClick="OnLinkClick"></LinkComponent>
+
     @foreach(var group in FilterGroups)
     {
         <FilterComponent FilterGroup="group"></FilterComponent>
@@ -14,35 +16,66 @@
 </div>
 
 @code {
-    List<FilterGroup> FilterGroups = new()
-    {
-        new() {
-            Id = 1,
-            Name = "Group 1",
-            FilterOptions = new()
+    List<FilterGroup> FilterGroups = [];
+    readonly LinkGroup linkGroup = new()
+        {
+            Name = "Categories",
+            LinkOptions = new()
+        {
+            new()
             {
-                new (1, "Option 1", FilterType.Checkbox),
-                new (2, "Option 2", FilterType.Checkbox, true)
-            }
-        },
-        new() {
-            Id = 2,
-            Name = "Group 2",
-            FilterOptions = new()
+                Id = 1,
+                Name = "Clothes"
+            },
+            new()
             {
-                new (3, "Radios", FilterType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") }, 2)
-            }
-        },
-        new() {
-            Id = 3,
-            Name = "Group 3",
-            FilterOptions = new()
-            {
-                new (4, "Range", FilterType.Range, 1, 100, 1)
+                Id = 2,
+                Name = "Electronics"
             }
         }
-
     };
+
+    protected override void OnInitialized()
+    {
+        var linkOption = linkGroup.LinkOptions.FirstOrDefault();
+        if (linkOption is not null)
+            OnLinkClick(linkOption.Id);
+    }
+
+    void OnLinkClick(int id)
+    {
+        linkGroup.LinkOptions.ForEach(l => l.IsSelected = false);
+        linkGroup.LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
+
+        FilterGroups = new()
+        {
+            new() {
+                Id = 1,
+                Name = "Group 1",
+                FilterOptions = new()
+                {
+                    new (1, "Option 1", FilterType.Checkbox),
+                    new (2, "Option 2", FilterType.Checkbox, true)
+                }
+            },
+            new() {
+                Id = 2,
+                Name = "Group 2",
+                FilterOptions = new()
+                {
+                    new (3, "Radios", FilterType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") }, 2)
+                }
+            },
+            new() {
+                Id = 3,
+                Name = "Group 3",
+                FilterOptions = new()
+                {
+                    new (4, "Range", FilterType.Range, 1, 100, 1)
+                }
+            }
+        };
+    }
 
     private async Task FilterProducts(MouseEventArgs e)
     {

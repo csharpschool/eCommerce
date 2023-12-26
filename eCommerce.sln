@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.UI", "eCommerce.UI\eCommerce.UI.csproj", "{3451A90F-EADA-4978-8CCA-7927EC4D685D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerce.UI", "eCommerce.UI\eCommerce.UI.csproj", "{3451A90F-EADA-4978-8CCA-7927EC4D685D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Common.Razor", "eCommerce.Common.Razor\eCommerce.Common.Razor.csproj", "{E80A81C4-BA4F-4301-8D34-75AA5948E02C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerce.Common.Razor", "eCommerce.Common.Razor\eCommerce.Common.Razor.csproj", "{E80A81C4-BA4F-4301-8D34-75AA5948E02C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

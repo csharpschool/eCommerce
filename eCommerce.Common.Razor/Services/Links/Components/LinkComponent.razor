@@ -1,0 +1,24 @@
+﻿@if(LinkGroup is not null)
+{
+    <section class="d-flex flex-column my-2 pb-2 pt-n2 border border-secondary-subtle">
+        <div class="h6 text-center text-light w-100 py-2 border-bottom border-secondary-subtle bg-primary">@LinkGroup.Name</div>
+        @foreach (var link in LinkGroup.LinkOptions)
+        {
+            <Link LinkOption="link" OnLinkClick="OnClick"></Link>
+        }
+    </section>
+}
+
+@code {
+    [Parameter]
+    public EventCallback<int> OnLinkClick { get; set; }
+    [Parameter]
+    public LinkGroup? LinkGroup { get; set; }
+
+
+    void OnClick(int id)
+    {
+        if (OnLinkClick.HasDelegate)
+            OnLinkClick.InvokeAsync(id);
+    }
+}

@@ -1,0 +1,21 @@
+﻿@if (LinkOption is not null)
+{
+    <button class="btn btn-link text-start text-decoration-none py-0 @(LinkOption.IsSelected ? "ps-0" : "ps-3")" @onclick="OnClick">
+        @if (LinkOption.IsSelected) { <i class="bi-caret-right"></i> }
+        @LinkOption?.Name
+    </button>
+}
+
+@code {
+    [Parameter]
+    public LinkOption? LinkOption { get; set; }
+
+    [Parameter]
+    public EventCallback<int> OnLinkClick { get; set; }
+
+    void OnClick()
+    {
+        if (OnLinkClick.HasDelegate && LinkOption is not null)
+            OnLinkClick.InvokeAsync(LinkOption.Id);
+    }
+}
