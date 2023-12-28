@@ -1,0 +1,1 @@
+﻿global using eCommerce.Common.Database.Enums;

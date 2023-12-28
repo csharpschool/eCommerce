@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\eCommerce.Common.Database\eCommerce.Common.Database.csproj" />
     <ProjectReference Include="..\eCommerce.Common.Razor\eCommerce.Common.Razor.csproj" />
   </ItemGroup>
 

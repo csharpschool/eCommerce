@@ -48,8 +48,8 @@
                 Name = "Group 1",
                 FilterOptions = new()
                 {
-                    new (1, "Option 1", FilterType.Checkbox),
-                    new (2, "Option 2", FilterType.Checkbox, true)
+                    new (1, "Option 1", OptionType.Checkbox),
+                    new (2, "Option 2", OptionType.Checkbox, true)
                 }
             },
             new() {
@@ -57,7 +57,7 @@
                 Name = "Group 2",
                 FilterOptions = new()
                 {
-                    new (3, "Radios", FilterType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") }, 2)
+                    new (3, "Radios", OptionType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") }, 2)
                 }
             },
             new() {
@@ -65,7 +65,7 @@
                 Name = "Group 3",
                 FilterOptions = new()
                 {
-                    new (4, "Range", FilterType.Range, 1, 100, 1)
+                    new (4, "Range", OptionType.Range, 1, 100, 1)
                 }
             }
         };

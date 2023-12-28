@@ -4,18 +4,18 @@ namespace eCommerce.Common.Razor.Services.Filter;
 
 public class FilterRenderingService
 {
-    private readonly Dictionary<FilterType, Type> _filterTypeToComponentMapping = new()
-        {
-            { FilterType.Checkbox, typeof(CheckboxFilter) },
-            { FilterType.RadioButton, typeof(RadioButtonFilter) },
-            { FilterType.Range, typeof(RangeFilter) }
-        };
+    private readonly Dictionary<OptionType, Type> _optionTypeToComponentMapping = new()
+    {
+        { OptionType.Checkbox, typeof(CheckboxFilter) },
+        { OptionType.RadioButton, typeof(RadioButtonFilter) },
+        { OptionType.Range, typeof(RangeFilter) }
+    };
 
     public RenderFragment RenderFilter(FilterOption filter)
     {
         return builder =>
         {
-            var componentType = GetComponentType(filter.FilterType);
+            var componentType = GetComponentType(filter.OptionType);
             if (componentType != null)
             {
                 builder.OpenComponent(0, componentType);
@@ -35,8 +35,8 @@ public class FilterRenderingService
             }
         };
     }
-    private Type GetComponentType(FilterType filterType) => 
-        _filterTypeToComponentMapping.TryGetValue(filterType, out var componentType)
+    private Type GetComponentType(OptionType oprionType) => 
+        _optionTypeToComponentMapping.TryGetValue(oprionType, out var componentType)
             ? componentType
             : throw new ArgumentNullException("Couldn't find a matching component.");
 }
