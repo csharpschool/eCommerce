@@ -1,7 +1,3 @@
-using eCommerce.Common.Database.DTOs;
-using eCommerce.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,7 +19,6 @@ builder.Services.AddCors(policy => {
     );
 });
 
-ConfigureAutoMapper(builder.Services);
 RegisterServices(builder.Services);
 
 var app = builder.Build();
@@ -39,32 +34,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-/*var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-*/
 app.Run();
 
-/*internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+void RegisterServices(IServiceCollection services)
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}*/
+    ConfigureAutoMapper(builder.Services);
+    services.AddScoped<DbService<FilterContext>>();
+}
+
+void RegisterEndpoints(WebApplication app)
+{
+    app.AddEndpoint<FilterContext, Category, CategoryPostDTO, CategoryPutDTO, CategoryGetDTO>();
+    app.AddEndpoint<FilterContext, Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
+    app.AddEndpoint<FilterContext, Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
+    app.AddEndpoint<FilterContext, CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
+    app.AddEndpoint<FilterContext, FilterOption, FilterOptionPostDTO, FilterOptionDeleteDTO>();
+}
 
 void ConfigureAutoMapper(IServiceCollection services)
 {
@@ -86,18 +71,4 @@ void ConfigureAutoMapper(IServiceCollection services)
     });
     var mapper = config.CreateMapper();
     services.AddSingleton(mapper);
-}
-
-void RegisterServices(IServiceCollection services)
-{
-    services.AddScoped<DbService<FilterContext>>();
-}
-
-void RegisterEndpoints(WebApplication app)
-{
-    app.AddEndpoint<FilterContext, Category, CategoryPostDTO, CategoryPutDTO, CategoryGetDTO>();
-    app.AddEndpoint<FilterContext, Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
-    app.AddEndpoint<FilterContext, Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
-    app.AddEndpoint<FilterContext, CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
-    app.AddEndpoint<FilterContext, FilterOption, FilterOptionPostDTO, FilterOptionDeleteDTO>();
 }
