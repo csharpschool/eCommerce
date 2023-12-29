@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\eCommerce.Common.API\eCommerce.Common.API.csproj" />
     <ProjectReference Include="..\eCommerce.Common.Database\eCommerce.Common.Database.csproj" />
-    <ProjectReference Include="..\eCommerce.Data\eCommerce.Data.csproj" />
   </ItemGroup>
 
 </Project>

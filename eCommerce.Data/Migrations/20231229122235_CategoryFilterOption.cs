@@ -5,7 +5,7 @@
 namespace eCommerce.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class CategoryFilterOption : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,22 +24,7 @@ namespace eCommerce.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Option",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OptionType = table.Column<int>(type: "int", nullable: false),
-                    IsSelected = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Option", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Statuses",
+                name: "Filters",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -48,7 +33,7 @@ namespace eCommerce.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Statuses", x => x.Id);
+                    table.PrimaryKey("PK_Filters", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,39 +47,37 @@ namespace eCommerce.Data.Migrations
                 {
                     table.PrimaryKey("PK_CategoryFilters", x => new { x.CategoryId, x.FilterId });
                     table.ForeignKey(
-                        name: "FK_CategoryFilters_Categories_FilterId",
-                        column: x => x.FilterId,
+                        name: "FK_CategoryFilters_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CategoryFilters_Statuses_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Statuses",
+                        name: "FK_CategoryFilters_Filters_FilterId",
+                        column: x => x.FilterId,
+                        principalTable: "Filters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "FilterOptions",
+                name: "Options",
                 columns: table => new
                 {
-                    FilterId = table.Column<int>(type: "int", nullable: false),
-                    OptionId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OptionType = table.Column<int>(type: "int", nullable: false),
+                    IsSelected = table.Column<bool>(type: "bit", nullable: false),
+                    FilterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FilterOptions", x => new { x.FilterId, x.OptionId });
+                    table.PrimaryKey("PK_Options", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FilterOptions_Option_FilterId",
+                        name: "FK_Options_Filters_FilterId",
                         column: x => x.FilterId,
-                        principalTable: "Option",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FilterOptions_Statuses_OptionId",
-                        column: x => x.OptionId,
-                        principalTable: "Statuses",
+                        principalTable: "Filters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -105,9 +88,9 @@ namespace eCommerce.Data.Migrations
                 column: "FilterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FilterOptions_OptionId",
-                table: "FilterOptions",
-                column: "OptionId");
+                name: "IX_Options_FilterId",
+                table: "Options",
+                column: "FilterId");
         }
 
         /// <inheritdoc />
@@ -117,16 +100,13 @@ namespace eCommerce.Data.Migrations
                 name: "CategoryFilters");
 
             migrationBuilder.DropTable(
-                name: "FilterOptions");
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Option");
-
-            migrationBuilder.DropTable(
-                name: "Statuses");
+                name: "Filters");
         }
     }
 }

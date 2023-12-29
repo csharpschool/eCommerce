@@ -9,5 +9,6 @@ public class Option : IEntity
     public OptionType OptionType { get; set; }
     public bool IsSelected { get; set; }
 
-    public List<Filter>? Filters { get; } = [];
+    public int FilterId { get; set; }
+    public Filter? Filter { get; }
 }

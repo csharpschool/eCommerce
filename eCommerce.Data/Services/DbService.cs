@@ -1,25 +1,23 @@
 ﻿using AutoMapper;
-using eCommerce.Common.Database.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace eCommerce.Common.Database.Services;
+namespace eCommerce.Data.Services;
 
-public class DbService<T> where T : DbContext
+public class DbService<T> : IDbService where T : DbContext
 {
     protected readonly T _db;
     private protected readonly IMapper _mapper;
 
     public DbService(T db, IMapper mapper) => (_db, _mapper) = (db, mapper);
 
-    public async Task<TDto> SingleAsync<TEntity, TDto>(int id) where TEntity : class, IEntity where TDto : class
+    public virtual async Task<TDto> SingleAsync<TEntity, TDto>(int id) where TEntity : class, IEntity where TDto : class
     {
-        IncludeNavigations<TEntity>();
         var entity = await _db.Set<TEntity>().SingleOrDefaultAsync(e => e.Id == id);
         return _mapper.Map<TDto>(entity);
     }
-    public async Task<List<TDto>> GetAsync<TEntity, TDto>() where TEntity : class where TDto : class
+    public virtual async Task<List<TDto>> GetAsync<TEntity, TDto>() where TEntity : class where TDto : class
     {
-        IncludeNavigations<TEntity>();
+        IncludeNavigationsFor<TEntity>();
         var entities = await _db.Set<TEntity>().ToListAsync();
         return _mapper.Map<List<TDto>>(entities);
     }
@@ -60,20 +58,21 @@ public class DbService<T> where T : DbContext
 
         return true;
     }
-
     public async Task<bool> SaveChangesAsync() => await _db.SaveChangesAsync() >= 0;
-    public void IncludeNavigations<TEntity>() where TEntity : class
+    public void IncludeNavigationsFor<TEntity>() where TEntity : class
     {
         // Skip Navigation Properties are used for many-to-many
-        // relationsips (ICollection) and Navigation Properties
+        // relationsips (List or ICollection) and Navigation Properties
         // are used for one-to-many relationsips.
-        var entityType = _db.Model.FindEntityType(typeof(TEntity));
-        if (entityType == null) return;
+        var propertyNames = _db.Model.FindEntityType(typeof(TEntity))?.GetNavigations().Select(e => e.Name);
+        var navigationPropertyNames = _db.Model.FindEntityType(typeof(TEntity))?.GetSkipNavigations().Select(e => e.Name);
 
-        var skipNavigationProperties = entityType.GetDeclaredSkipNavigations().Select(s => s.Name);
-        var navigationProperties = entityType.GetNavigations().Select(s => s.Name);
-        foreach (var name in navigationProperties.Union(skipNavigationProperties))
-            _db.Set<TEntity>().Include(name).Load();
+        if (propertyNames is not null)
+            foreach (var name in propertyNames)
+                _db.Set<TEntity>().Include(name).Load();
+
+        if (navigationPropertyNames is not null)
+            foreach (var name in navigationPropertyNames)
+                _db.Set<TEntity>().Include(name).Load();
     }
-
 }

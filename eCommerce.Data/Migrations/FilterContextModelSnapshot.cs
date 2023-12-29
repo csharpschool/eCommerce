@@ -67,22 +67,7 @@ namespace eCommerce.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses");
-                });
-
-            modelBuilder.Entity("eCommerce.Data.Entities.FilterOption", b =>
-                {
-                    b.Property<int>("FilterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OptionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("FilterId", "OptionId");
-
-                    b.HasIndex("OptionId");
-
-                    b.ToTable("FilterOptions");
+                    b.ToTable("Filters");
                 });
 
             modelBuilder.Entity("eCommerce.Data.Entities.Option", b =>
@@ -92,6 +77,9 @@ namespace eCommerce.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FilterId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
@@ -105,18 +93,20 @@ namespace eCommerce.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Option");
+                    b.HasIndex("FilterId");
+
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("eCommerce.Data.Entities.CategoryFilter", b =>
                 {
-                    b.HasOne("eCommerce.Data.Entities.Filter", "Filter")
+                    b.HasOne("eCommerce.Data.Entities.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eCommerce.Data.Entities.Category", "Category")
+                    b.HasOne("eCommerce.Data.Entities.Filter", "Filter")
                         .WithMany()
                         .HasForeignKey("FilterId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -127,23 +117,20 @@ namespace eCommerce.Data.Migrations
                     b.Navigation("Filter");
                 });
 
-            modelBuilder.Entity("eCommerce.Data.Entities.FilterOption", b =>
+            modelBuilder.Entity("eCommerce.Data.Entities.Option", b =>
                 {
-                    b.HasOne("eCommerce.Data.Entities.Option", "Option")
-                        .WithMany()
+                    b.HasOne("eCommerce.Data.Entities.Filter", "Filter")
+                        .WithMany("Options")
                         .HasForeignKey("FilterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("eCommerce.Data.Entities.Filter", "Filter")
-                        .WithMany()
-                        .HasForeignKey("OptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Filter");
+                });
 
-                    b.Navigation("Option");
+            modelBuilder.Entity("eCommerce.Data.Entities.Filter", b =>
+                {
+                    b.Navigation("Options");
                 });
 #pragma warning restore 612, 618
         }

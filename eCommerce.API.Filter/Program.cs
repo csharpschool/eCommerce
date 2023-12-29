@@ -39,7 +39,7 @@ app.Run();
 void RegisterServices(IServiceCollection services)
 {
     ConfigureAutoMapper(builder.Services);
-    services.AddScoped<DbService<FilterContext>>();
+    services.AddScoped<IDbService, FilterDbService<FilterContext>>();
 }
 
 void RegisterEndpoints(WebApplication app)
@@ -48,7 +48,6 @@ void RegisterEndpoints(WebApplication app)
     app.AddEndpoint<FilterContext, Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
     app.AddEndpoint<FilterContext, Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
     app.AddEndpoint<FilterContext, CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
-    app.AddEndpoint<FilterContext, FilterOption, FilterOptionPostDTO, FilterOptionDeleteDTO>();
 }
 
 void ConfigureAutoMapper(IServiceCollection services)
@@ -66,8 +65,8 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<Option, OptionGetDTO>().ReverseMap();
         cfg.CreateMap<CategoryFilter, CategoryFilterPostDTO>().ReverseMap();
         cfg.CreateMap<CategoryFilter, CategoryFilterDeleteDTO>().ReverseMap();
-        cfg.CreateMap<FilterOption, FilterOptionPostDTO>().ReverseMap();
-        cfg.CreateMap<FilterOption, FilterOptionDeleteDTO>().ReverseMap();
+        //cfg.CreateMap<FilterOption, FilterOptionPostDTO>().ReverseMap();
+        //cfg.CreateMap<FilterOption, FilterOptionDeleteDTO>().ReverseMap();
     });
     var mapper = config.CreateMapper();
     services.AddSingleton(mapper);

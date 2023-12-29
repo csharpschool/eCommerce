@@ -2,8 +2,8 @@
 
 public class FilterOptionPostDTO
 {
-    public int CategoryId { get; set; }
     public int FilterId { get; set; }
+    public int OptionId { get; set; }
 }
 public class FilterOptionDeleteDTO : FilterOptionPostDTO
 {
