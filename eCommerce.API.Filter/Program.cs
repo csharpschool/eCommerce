@@ -44,10 +44,10 @@ void RegisterServices(IServiceCollection services)
 
 void RegisterEndpoints(WebApplication app)
 {
-    app.AddEndpoint<FilterContext, Category, CategoryPostDTO, CategoryPutDTO, CategoryGetDTO>();
-    app.AddEndpoint<FilterContext, Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
-    app.AddEndpoint<FilterContext, Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
-    app.AddEndpoint<FilterContext, CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
+    app.AddEndpoint<Category, CategoryPostDTO, CategoryPutDTO, CategoryGetDTO>();
+    app.AddEndpoint<Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
+    app.AddEndpoint<Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
+    app.AddEndpoint<CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
 }
 
 void ConfigureAutoMapper(IServiceCollection services)
