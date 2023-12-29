@@ -11,11 +11,14 @@ builder.Services.AddDbContext<FilterContext>(
         options.UseSqlServer(
             builder.Configuration.GetConnectionString("ECommerceConnection")));
 
-builder.Services.AddCors(policy => {
+builder.Services.AddCors(policy =>
+{
     policy.AddPolicy("CorsAllAccessPolicy", opt =>
         opt.AllowAnyOrigin()
            .AllowAnyHeader()
            .AllowAnyMethod()
+           /*.SetIsOriginAllowed(origin => true)
+           .AllowCredentials()*/
     );
 });
 
@@ -33,6 +36,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Configure CORRS
+app.UseCors("CorsAllAccessPolicy");
 
 app.Run();
 

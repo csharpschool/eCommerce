@@ -33,7 +33,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        
+        var result = await Http.GetCategoriesAsync();
     }
 
     protected override void OnInitialized()

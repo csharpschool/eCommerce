@@ -1,37 +1,40 @@
-﻿using System.Text.Json;
+﻿using eCommerce.Common.Database.DTOs;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace eCommerce.Common.Http.Clients;
 
 public class FilterHttpClient
 {
-    private readonly HttpClient _httpClient;
+    //private readonly HttpClient _httpClient;
+    public HttpClient Client { get; }
 
     public FilterHttpClient(HttpClient httpClient)
     {
-        _httpClient = httpClient;
-        _httpClient.BaseAddress = new Uri("https://localhost:5001/api/");
+        Client = httpClient;
+        //Client.BaseAddress = new Uri("https://localhost:5501/api/categorys");
     }
 
-    /*public async Task<List<CourseDTO>> GetCoursesAsync()
+    public async Task<List<CategoryGetDTO>> GetCategoriesAsync()
     {
         try
         {
-            var token = await _storage.GetAsync(AuthConstants.TokenName);
+            //var token = await _storage.GetAsync(AuthConstants.TokenName);
 
-            bool freeOnly = JwtParser.ParseIsNotInRoleFromPayload(token, UserRole.Customer);
-            _http.AddBearerToken(token);
+            //bool freeOnly = JwtParser.ParseIsNotInRoleFromPayload(token, UserRole.Customer);
+            //_http.AddBearerToken(token);
 
-            using HttpResponseMessage response = await _http.Client.GetAsync($"courses?freeOnly={freeOnly}");
+            using HttpResponseMessage response = await Client.GetAsync("categorys");
             response.EnsureSuccessStatusCode();
 
-            var result = JsonSerializer.Deserialize<List<CourseDTO>>(await response.Content.ReadAsStreamAsync(),
+            var result = JsonSerializer.Deserialize<List<CategoryGetDTO>>(await response.Content.ReadAsStreamAsync(),
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            return result ?? new List<CourseDTO>();
+            return result ?? [];
         }
-        catch
+        catch(Exception ex) 
         {
-            return new List<CourseDTO>();
+            return [];
         }
-    }*/
+    }
 }

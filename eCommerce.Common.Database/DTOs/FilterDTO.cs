@@ -12,5 +12,5 @@ public class FilterPutDTO : FilterPostDTO
 
 public class FilterGetDTO : FilterPutDTO
 {
-    public List<OptionGetDTO>? Options { get; } = [];
+    public List<OptionGetDTO>? Options { get; set; }
 }

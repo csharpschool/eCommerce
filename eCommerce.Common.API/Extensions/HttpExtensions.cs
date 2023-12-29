@@ -1,6 +1,4 @@
-﻿using eCommerce.Data.Services;
-
-namespace eCommerce.Common.API.Extensions;
+﻿namespace eCommerce.Common.API.Extensions;
 
 public static class HttpExtensions
 {
