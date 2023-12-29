@@ -1,4 +1,5 @@
 ﻿@inject FilterHttpClient Http
+@inject IMapper mapper
 
 <div class="d-flex flex-column m-2 ms-0 p-2 pt-0 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
     <LinkComponent LinkGroup="linkGroup" OnLinkClick="OnLinkClick"></LinkComponent>
@@ -12,32 +13,17 @@
 </div>
 
 @code {
+    List<CategoryGetDTO> Categories = [];
     List<FilterGroup> FilterGroups = [];
     readonly LinkGroup linkGroup = new()
-        {
-            Name = "Categories",
-            LinkOptions = new()
-            {
-                new()
-                {
-                    Id = 1,
-                    Name = "Clothes"
-                },
-                new()
-                {
-                    Id = 2,
-                    Name = "Electronics"
-                }
-            }
-        };
+    {
+            Name = "Categories"
+    };
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetCategoriesAsync();
-    }
-
-    protected override void OnInitialized()
-    {
+        Categories = await Http.GetCategoriesAsync();
+        linkGroup.LinkOptions = mapper.Map<List<LinkOption>>(Categories);
         var linkOption = linkGroup.LinkOptions.FirstOrDefault();
         if (linkOption is not null)
             OnLinkClick(linkOption.Id);
@@ -48,34 +34,8 @@
         linkGroup.LinkOptions.ForEach(l => l.IsSelected = false);
         linkGroup.LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
 
-        FilterGroups = new()
-        {
-            new() {
-                Id = 1,
-                Name = "Group 1",
-                FilterOptions = new()
-                {
-                    new (1, "Option 1", OptionType.Checkbox),
-                    new (2, "Option 2", OptionType.Checkbox, true)
-                }
-            },
-            new() {
-                Id = 2,
-                Name = "Group 2",
-                FilterOptions = new()
-                {
-                    new (3, "Radios", OptionType.RadioButton, new List<RadioModel> { new(1, "Radio 1"), new(2, "Radio 2"), new(3, "Radio 3") }, 2)
-                }
-            },
-            new() {
-                Id = 3,
-                Name = "Group 3",
-                FilterOptions = new()
-                {
-                    new (4, "Range", OptionType.Range, 1, 100, 1)
-                }
-            }
-        };
+        var filters = Categories.Single(c => c.Id.Equals(id)).Filters;
+        FilterGroups = mapper.Map<List<FilterGroup>>(filters);
     }
 
     private async Task FilterProducts(MouseEventArgs e)

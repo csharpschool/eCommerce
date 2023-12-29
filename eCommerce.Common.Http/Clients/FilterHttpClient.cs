@@ -1,18 +1,19 @@
-﻿using eCommerce.Common.Database.DTOs;
+﻿using AutoMapper;
+using eCommerce.Common.Database.DTOs;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks.Dataflow;
 
 namespace eCommerce.Common.Http.Clients;
 
 public class FilterHttpClient
 {
-    //private readonly HttpClient _httpClient;
     public HttpClient Client { get; }
 
     public FilterHttpClient(HttpClient httpClient)
     {
         Client = httpClient;
-        //Client.BaseAddress = new Uri("https://localhost:5501/api/categorys");
+        Client.BaseAddress = new Uri("https://localhost:5501/api/categorys");
     }
 
     public async Task<List<CategoryGetDTO>> GetCategoriesAsync()
@@ -24,7 +25,7 @@ public class FilterHttpClient
             //bool freeOnly = JwtParser.ParseIsNotInRoleFromPayload(token, UserRole.Customer);
             //_http.AddBearerToken(token);
 
-            using HttpResponseMessage response = await Client.GetAsync("categorys");
+            using HttpResponseMessage response = await Client.GetAsync("");
             response.EnsureSuccessStatusCode();
 
             var result = JsonSerializer.Deserialize<List<CategoryGetDTO>>(await response.Content.ReadAsStreamAsync(),
