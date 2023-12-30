@@ -1,6 +1,4 @@
-﻿using eCommerce.Common.Database.Enums;
-
-namespace eCommerce.Data.Entities;
+﻿namespace eCommerce.Data.Entities;
 
 public class Option : IEntity
 {

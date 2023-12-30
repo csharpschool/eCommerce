@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace eCommerce.Data.Contexts;
+﻿namespace eCommerce.Data.Contexts;
 
 public class FilterContext(DbContextOptions<FilterContext> options) : DbContext(options)
 {

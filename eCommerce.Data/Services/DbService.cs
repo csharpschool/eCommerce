@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-
-namespace eCommerce.Data.Services;
+﻿namespace eCommerce.Data.Services;
 
 public class DbService<T> : IDbService where T : DbContext
 {

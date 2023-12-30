@@ -14,9 +14,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\eCommerce.Common.Database\eCommerce.Common.Database.csproj" />
-  </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\eCommerce.Data.Shared\eCommerce.Data.Shared.csproj" />
+    </ItemGroup>
 
 </Project>

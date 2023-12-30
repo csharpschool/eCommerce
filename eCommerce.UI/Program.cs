@@ -1,6 +1,3 @@
-using AutoMapper;
-using eCommerce.Common.Database.DTOs;
-using eCommerce.Common.Razor.Services.Links;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -20,7 +17,6 @@ void RegisterServices(IServiceCollection services)
     services.AddScoped<FilterRenderingService>();
     services.AddHttpClient<FilterHttpClient>();
 }
-
 
 void ConfigureAutoMapper(IServiceCollection services)
 {

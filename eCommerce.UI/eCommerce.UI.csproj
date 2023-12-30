@@ -14,9 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\eCommerce.Common.Database\eCommerce.Common.Database.csproj" />
-    <ProjectReference Include="..\eCommerce.Common.Http\eCommerce.Common.Http.csproj" />
-    <ProjectReference Include="..\eCommerce.Common.Razor\eCommerce.Common.Razor.csproj" />
+    <ProjectReference Include="..\eCommerce.API.DTO\eCommerce.API.DTO.csproj" />
+    <ProjectReference Include="..\eCommerce.UI.Http\eCommerce.UI.Http.csproj" />
+    <ProjectReference Include="..\eCommerce.UI.Models\eCommerce.UI.Models.csproj" />
+    <ProjectReference Include="..\eCommerce.UI.Razor\eCommerce.UI.Razor.csproj" />
   </ItemGroup>
 
 </Project>

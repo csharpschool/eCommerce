@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\eCommerce.Common.API\eCommerce.Common.API.csproj" />
-    <ProjectReference Include="..\eCommerce.Common.Database\eCommerce.Common.Database.csproj" />
+    <ProjectReference Include="..\eCommerce.API.DTO\eCommerce.API.DTO.csproj" />
+    <ProjectReference Include="..\eCommerce.API.Extensions\eCommerce.API.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

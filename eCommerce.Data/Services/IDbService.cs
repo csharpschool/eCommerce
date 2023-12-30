@@ -1,5 +1,4 @@
-﻿
-namespace eCommerce.Data.Services
+﻿namespace eCommerce.Data.Services
 {
     public interface IDbService
     {
