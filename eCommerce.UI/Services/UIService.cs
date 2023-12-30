@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace eCommerce.UI.Services;
 
@@ -38,4 +39,10 @@ public class UIService
         var filters = Categories.Single(c => c.Id.Equals(id)).Filters;
         FilterGroups = _mapper.Map<List<FilterGroup>>(filters);
     }
+
+    public async Task FilterProducts(MouseEventArgs e)
+    {
+        // Use the filters collection
+    }
+
 }

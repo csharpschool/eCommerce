@@ -8,7 +8,7 @@
         <FilterComponent FilterGroup="group"></FilterComponent>
     }
 
-    <button class="btn btn-outline-primary rounded-0 mt-2" @onclick="FilterProducts">Apply Filter</button>
+    <button class="btn btn-outline-primary rounded-0 mt-2" @onclick="service.FilterProducts">Apply Filter</button>
 </div>
 
 @code {
@@ -16,10 +16,5 @@
     protected override async Task OnInitializedAsync()
     {
         await service.GetLinkGroup();
-    }
-
-    private async Task FilterProducts(MouseEventArgs e)
-    {
-        // Use the filters collection
     }
 }

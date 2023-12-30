@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerce.Data.Contexts;
 
@@ -9,10 +10,12 @@ using eCommerce.Data.Contexts;
 
 namespace eCommerce.Data.Migrations
 {
-    [DbContext(typeof(FilterContext))]
-    partial class FilterContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ECommerceContext))]
+    [Migration("20231230120806_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,6 +101,46 @@ namespace eCommerce.Data.Migrations
                     b.ToTable("Options");
                 });
 
+            modelBuilder.Entity("eCommerce.Data.Entities.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("eCommerce.Data.Entities.ProductCategory", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCategories");
+                });
+
             modelBuilder.Entity("eCommerce.Data.Entities.CategoryFilter", b =>
                 {
                     b.HasOne("eCommerce.Data.Entities.Category", "Category")
@@ -126,6 +169,25 @@ namespace eCommerce.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Filter");
+                });
+
+            modelBuilder.Entity("eCommerce.Data.Entities.ProductCategory", b =>
+                {
+                    b.HasOne("eCommerce.Data.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerce.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("eCommerce.Data.Entities.Filter", b =>
