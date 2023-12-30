@@ -1,3 +1,5 @@
+using System.Xml.Linq;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -43,13 +45,25 @@ app.Run();
 void RegisterServices(IServiceCollection services)
 {
     ConfigureAutoMapper(builder.Services);
-    services.AddScoped<IDbService, ProductDbService<ECommerceContext>>();
+    services.AddScoped<IDbService, ProductDbService>();
 }
 
 void RegisterEndpoints(WebApplication app)
 {
     app.AddEndpoint<Product, ProductPostDTO, ProductPutDTO, ProductGetDTO>();
     app.AddEndpoint<ProductCategory, ProductCategoryPostDTO, ProductCategoryDeleteDTO>();
+    app.MapGet($"/api/productsbycategory/" + "{categoryId}", async (IDbService db, int categoryId) =>
+    {
+        try
+        {
+            return Results.Ok(await ((ProductDbService)db).GetAsync(categoryId));
+        }
+        catch
+        {
+        }
+
+        return Results.BadRequest($"Couldn't get the requested products of type {typeof(Product).Name}.");
+    });
 }
 
 void ConfigureAutoMapper(IServiceCollection services)

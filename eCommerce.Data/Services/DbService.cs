@@ -1,11 +1,13 @@
-﻿namespace eCommerce.Data.Services;
+﻿using System.Linq.Expressions;
 
-public class DbService<T> : IDbService where T : DbContext
+namespace eCommerce.Data.Services;
+
+public class DbService : IDbService
 {
-    protected readonly T _db;
+    protected readonly ECommerceContext _db;
     private protected readonly IMapper _mapper;
 
-    public DbService(T db, IMapper mapper) => (_db, _mapper) = (db, mapper);
+    public DbService(ECommerceContext db, IMapper mapper) => (_db, _mapper) = (db, mapper);
 
     public virtual async Task<TDto> SingleAsync<TEntity, TDto>(int id) where TEntity : class, IEntity where TDto : class
     {
@@ -16,6 +18,18 @@ public class DbService<T> : IDbService where T : DbContext
     {
         IncludeNavigationsFor<TEntity>();
         var entities = await _db.Set<TEntity>().ToListAsync();
+        return _mapper.Map<List<TDto>>(entities);
+    }
+    public IQueryable<TEntity> GetAsync<TEntity>(
+        Expression<Func<TEntity, bool>> expression)
+        where TEntity : class
+    {
+        return _db.Set<TEntity>().Where(expression);
+    }
+    public List<TDto> MapList<TEntity, TDto>(List<TEntity> entities)
+        where TEntity : class
+        where TDto : class
+    {
         return _mapper.Map<List<TDto>>(entities);
     }
     public async Task<TEntity> AddAsync<TEntity, TDto>(TDto dto) where TEntity : class where TDto : class

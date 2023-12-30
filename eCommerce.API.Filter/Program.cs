@@ -43,7 +43,7 @@ app.Run();
 void RegisterServices(IServiceCollection services)
 {
     ConfigureAutoMapper(builder.Services);
-    services.AddScoped<IDbService, FilterDbService<ECommerceContext>>();
+    services.AddScoped<IDbService, FilterDbService>();
 }
 
 void RegisterEndpoints(WebApplication app)
@@ -69,8 +69,6 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<Option, OptionGetDTO>().ReverseMap();
         cfg.CreateMap<CategoryFilter, CategoryFilterPostDTO>().ReverseMap();
         cfg.CreateMap<CategoryFilter, CategoryFilterDeleteDTO>().ReverseMap();
-        //cfg.CreateMap<Product, ProductGetDTO>().ReverseMap();
-        //cfg.CreateMap<ProductCategory, ProductCategoryGetDTO>().ReverseMap();
     });
     var mapper = config.CreateMapper();
     services.AddSingleton(mapper);

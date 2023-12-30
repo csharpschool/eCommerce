@@ -8,3 +8,11 @@ public class ProductCategoryPostDTO
 public class ProductCategoryDeleteDTO : ProductCategoryPostDTO
 {
 }
+public class ProductCategoryGetDTO : ProductCategoryPostDTO
+{
+}
+
+public class ProductCategorySmallGetDTO
+{
+    public int CategoryId { get; set; }
+}

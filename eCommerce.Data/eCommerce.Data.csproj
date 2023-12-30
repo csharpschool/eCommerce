@@ -16,6 +16,7 @@
   </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\eCommerce.API.DTO\eCommerce.API.DTO.csproj" />
       <ProjectReference Include="..\eCommerce.Data.Shared\eCommerce.Data.Shared.csproj" />
     </ItemGroup>
 

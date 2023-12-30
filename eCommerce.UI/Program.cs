@@ -18,6 +18,7 @@ void RegisterServices(IServiceCollection services)
     services.AddScoped<FilterRenderingService>();
     services.AddSingleton<UIService>();
     services.AddHttpClient<FilterHttpClient>();
+    services.AddHttpClient<ProductHttpClient>();
 }
 
 void ConfigureAutoMapper(IServiceCollection services)

@@ -1,9 +1,15 @@
 ﻿@inject UIService service
 
 <section class="d-flex flex-wrap p-3 pt-2 align-items-start">
-    <div class="border border-1 p-2">sdfgklj</div>
+    @foreach(var product in service.Products)
+    {
+        <div class="border border-1 p-2">@product.Name</div>
+    }
 </section>
 
 @code {
-
+    protected override async Task OnInitializedAsync()
+    {
+        await service.GetProductsAsync(1);
+    }
 }

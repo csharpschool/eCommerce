@@ -1,6 +1,6 @@
 ﻿namespace eCommerce.Data.Services;
 
-public class FilterDbService<T>(T db, IMapper mapper) : DbService<T>(db, mapper) where T : DbContext
+public class FilterDbService(ECommerceContext db, IMapper mapper) : DbService(db, mapper)
 {
     public override async Task<List<TDto>> GetAsync<TEntity, TDto>()
     {
