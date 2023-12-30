@@ -1,10 +1,9 @@
-﻿@inject FilterHttpClient Http
-@inject IMapper mapper
+﻿@inject UIService service
 
 <div class="d-flex flex-column m-2 ms-0 p-2 pt-0 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
-    <LinkComponent LinkGroup="linkGroup" OnLinkClick="OnLinkClick"></LinkComponent>
+    <LinkComponent LinkGroup="service.LinkGroup" OnLinkClick="service.OnLinkClick"></LinkComponent>
 
-    @foreach (var group in FilterGroups)
+    @foreach (var group in service.FilterGroups)
     {
         <FilterComponent FilterGroup="group"></FilterComponent>
     }
@@ -13,29 +12,10 @@
 </div>
 
 @code {
-    List<CategoryGetDTO> Categories = [];
-    List<FilterGroup> FilterGroups = [];
-    readonly LinkGroup linkGroup = new()
-    {
-            Name = "Categories"
-    };
 
     protected override async Task OnInitializedAsync()
     {
-        Categories = await Http.GetCategoriesAsync();
-        linkGroup.LinkOptions = mapper.Map<List<LinkOption>>(Categories);
-        var linkOption = linkGroup.LinkOptions.FirstOrDefault();
-        if (linkOption is not null)
-            OnLinkClick(linkOption.Id);
-    }
-
-    void OnLinkClick(int id)
-    {
-        linkGroup.LinkOptions.ForEach(l => l.IsSelected = false);
-        linkGroup.LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
-
-        var filters = Categories.Single(c => c.Id.Equals(id)).Filters;
-        FilterGroups = mapper.Map<List<FilterGroup>>(filters);
+        await service.GetLinkGroup();
     }
 
     private async Task FilterProducts(MouseEventArgs e)

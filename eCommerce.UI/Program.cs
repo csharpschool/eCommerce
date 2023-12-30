@@ -1,3 +1,4 @@
+using eCommerce.UI.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -15,6 +16,7 @@ void RegisterServices(IServiceCollection services)
 {
     ConfigureAutoMapper(services);
     services.AddScoped<FilterRenderingService>();
+    services.AddSingleton<UIService>();
     services.AddHttpClient<FilterHttpClient>();
 }
 
