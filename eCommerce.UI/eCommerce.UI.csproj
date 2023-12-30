@@ -20,4 +20,8 @@
     <ProjectReference Include="..\eCommerce.UI.Razor\eCommerce.UI.Razor.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

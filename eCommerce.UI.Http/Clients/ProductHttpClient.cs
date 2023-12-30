@@ -27,7 +27,6 @@ public class ProductHttpClient
             var result = JsonSerializer.Deserialize<List<ProductGetDTO>>(await response.Content.ReadAsStreamAsync(),
                 new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            //TODO: Load initial products
             //TODO: Store the filter information in Local Storage (see ChatGPT for example)
             //TODO: Filter products with filters and display pagination
 
