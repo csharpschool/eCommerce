@@ -75,3 +75,10 @@
 code {
     color: #c02d76;
 }
+
+@media screen and (max-width: 470px) {
+    #aside-menu, #viewport {
+        height: auto !important;
+        flex-direction: column;
+    }
+}

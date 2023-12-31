@@ -1,3 +1,5 @@
+using Blazored.LocalStorage;
+using Blazored.SessionStorage;
 using eCommerce.UI.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -6,22 +8,24 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-RegisterServices(builder.Services);
+RegisterServices();
 //builder.Services.AddHttpClient<FilterHttpClient>(client => client.BaseAddress = new Uri("https://localhost:5501/api/"));
 
 await builder.Build().RunAsync();
 
 
-void RegisterServices(IServiceCollection services)
+void RegisterServices()
 {
-    ConfigureAutoMapper(services);
-    services.AddScoped<FilterRenderingService>();
-    services.AddSingleton<UIService>();
-    services.AddHttpClient<FilterHttpClient>();
-    services.AddHttpClient<ProductHttpClient>();
+    ConfigureAutoMapper();
+    builder.Services.AddScoped<FilterRenderingService>();
+    builder.Services.AddSingleton<UIService>();
+    builder.Services.AddHttpClient<FilterHttpClient>();
+    builder.Services.AddHttpClient<ProductHttpClient>();
+    //builder.Services.AddBlazoredLocalStorageAsSingleton();
+    //builder.Services.AddBlazoredSessionStorageAsSingleton();
 }
 
-void ConfigureAutoMapper(IServiceCollection services)
+void ConfigureAutoMapper()
 {
     var config = new MapperConfiguration(cfg =>
     {
@@ -34,5 +38,5 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<OptionGetDTO, FilterOption>();
     });
     var mapper = config.CreateMapper();
-    services.AddSingleton(mapper);
+    builder.Services.AddSingleton(mapper);
 }

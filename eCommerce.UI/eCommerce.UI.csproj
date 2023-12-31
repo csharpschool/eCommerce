@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eCommerce.API.DTO\eCommerce.API.DTO.csproj" />
+    <ProjectReference Include="..\eCommerce.Storage.WebAssembly\eCommerce.Storage.WebAssembly.csproj" />
     <ProjectReference Include="..\eCommerce.UI.Http\eCommerce.UI.Http.csproj" />
     <ProjectReference Include="..\eCommerce.UI.Models\eCommerce.UI.Models.csproj" />
     <ProjectReference Include="..\eCommerce.UI.Razor\eCommerce.UI.Razor.csproj" />

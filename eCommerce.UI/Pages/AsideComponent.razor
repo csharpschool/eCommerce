@@ -1,6 +1,6 @@
 ﻿@inject UIService service
 
-<div class="d-flex flex-column m-2 ms-0 p-2 pt-0 border border-secondary-subtle" style="min-width:160px; max-width:200px;">
+<aside id="aside-menu" class="d-flex flex-column m-2 ms-0 mt-0 p-2 pt-0 bg-body-tertiary vh-100" style="min-width:160px; max-width:200px;">
     <LinkComponent LinkGroup="service.LinkGroup" OnLinkClick="service.OnLinkClick"></LinkComponent>
 
     @foreach (var group in service.FilterGroups)
@@ -9,7 +9,7 @@
     }
 
     <button class="btn btn-outline-primary rounded-0 mt-2" @onclick="service.FilterProducts">Apply Filter</button>
-</div>
+</aside>
 
 @code {
 
