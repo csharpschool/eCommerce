@@ -4,6 +4,7 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
 {
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Filter> Filters => Set<Filter>();
+    public DbSet<FilterType> FilterTypes => Set<FilterType>();
     public DbSet<Option> Options => Set<Option>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<CategoryFilter> CategoryFilters => Set<CategoryFilter>();
@@ -27,6 +28,12 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
         builder.Entity<Filter>()
             .HasMany(c => c.Options)
             .WithOne(f => f.Filter);
+        #endregion
+
+        #region FilterType One-to-Many Relationship
+        builder.Entity<FilterType>()
+            .HasMany(ft => ft.Filters)
+            .WithOne(f => f.FilterType);
         #endregion
 
         #region ProductCategory Many-to-Many Relationship

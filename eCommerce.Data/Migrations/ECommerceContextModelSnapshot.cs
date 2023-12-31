@@ -61,13 +61,38 @@ namespace eCommerce.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("FilterTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OptionType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FilterTypeId");
+
+                    b.ToTable("Filters");
+                });
+
+            modelBuilder.Entity("eCommerce.Data.Entities.FilterType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Filters");
+                    b.ToTable("FilterTypes");
                 });
 
             modelBuilder.Entity("eCommerce.Data.Entities.Option", b =>
@@ -157,6 +182,17 @@ namespace eCommerce.Data.Migrations
                     b.Navigation("Filter");
                 });
 
+            modelBuilder.Entity("eCommerce.Data.Entities.Filter", b =>
+                {
+                    b.HasOne("eCommerce.Data.Entities.FilterType", "FilterType")
+                        .WithMany("Filters")
+                        .HasForeignKey("FilterTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FilterType");
+                });
+
             modelBuilder.Entity("eCommerce.Data.Entities.Option", b =>
                 {
                     b.HasOne("eCommerce.Data.Entities.Filter", "Filter")
@@ -190,6 +226,11 @@ namespace eCommerce.Data.Migrations
             modelBuilder.Entity("eCommerce.Data.Entities.Filter", b =>
                 {
                     b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("eCommerce.Data.Entities.FilterType", b =>
+                {
+                    b.Navigation("Filters");
                 });
 #pragma warning restore 612, 618
         }

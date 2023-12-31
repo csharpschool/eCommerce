@@ -35,7 +35,7 @@ void ConfigureAutoMapper()
 
         /*cfg.CreateMap<CategoryGetDTO, LinkOption>();
         cfg.CreateMap<FilterGetDTO, FilterGroup>();*/
-        cfg.CreateMap<OptionGetDTO, FilterOption>();
+        cfg.CreateMap<OptionGetDTO, FilterOption>().ReverseMap(); ;
     });
     var mapper = config.CreateMapper();
     builder.Services.AddSingleton(mapper);

@@ -50,8 +50,38 @@ void RegisterEndpoints(WebApplication app)
 {
     app.AddEndpoint<Category, CategoryPostDTO, CategoryPutDTO, CategoryGetDTO>();
     app.AddEndpoint<Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
+    app.AddEndpoint<FilterType, FilterTypePostDTO, FilterTypePutDTO, FilterTypeGetDTO>();
     app.AddEndpoint<Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
     app.AddEndpoint<CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
+    /*app.MapPost("/api/filterproducts", async (List<FilterRequestDTO> filterDTOs, IFilterService filterService) =>
+    {
+        try
+        {
+            // Assuming filterService.ProcessFiltering() is your method to apply filters
+            var filterDTOs = filterService.ProcessFiltering(filterRequest);
+            return Results.Ok(filterDTOs);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception details and return an appropriate error response
+            return Results.Problem(ex.Message);
+        }
+    });*/
+    app.MapPost("/api/filterproducts", async (List<FilterRequestDTO> filterDTOs) =>
+    {
+        try
+        {
+            //TODO: Implement a filtering service
+            // See commented out code above for injection example
+            return Results.Ok();
+        }
+        catch (Exception ex)
+        {
+            // Log the exception details and return an appropriate error response
+            return Results.Problem(ex.Message);
+        }
+    });
+
 }
 
 void ConfigureAutoMapper(IServiceCollection services)
@@ -64,6 +94,9 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<Filter, FilterPostDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterPutDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterGetDTO>().ReverseMap();
+        cfg.CreateMap<FilterType, FilterTypePostDTO>().ReverseMap();
+        cfg.CreateMap<FilterType, FilterTypePutDTO>().ReverseMap();
+        cfg.CreateMap<FilterType, FilterTypeGetDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionPostDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionPutDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionGetDTO>().ReverseMap();

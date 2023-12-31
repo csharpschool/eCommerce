@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Components.Web;
-
-namespace eCommerce.UI.Services;
+﻿namespace eCommerce.UI.Services;
 
 public class UIService
 {
@@ -12,10 +9,11 @@ public class UIService
     List<CategoryGetDTO> Categories { get; set; } = [];
     public List<ProductGetDTO> Products { get; private set; } = [];
     public List<FilterGroup> FilterGroups { get; private set; } = [];
-    public LinkGroup LinkGroup { get; private set; } = new()
+    public LinkGroup CaregoryLinkGroup { get; private set; } = new()
     {
         Name = "Categories"
     };
+    public int CurrentCategoryId { get; set; }
 
     public UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, IMapper mapper)
     {
@@ -27,8 +25,8 @@ public class UIService
     public async Task GetLinkGroup()
     {
         Categories = await _filterHttp.GetCategoriesAsync();
-        LinkGroup.LinkOptions = _mapper.Map<List<LinkOption>>(Categories);
-        var linkOption = LinkGroup.LinkOptions.FirstOrDefault();
+        CaregoryLinkGroup.LinkOptions = _mapper.Map<List<LinkOption>>(Categories);
+        var linkOption = CaregoryLinkGroup.LinkOptions.FirstOrDefault();
 
         if (linkOption is not null)
             OnLinkClick(linkOption.Id);
@@ -36,9 +34,10 @@ public class UIService
 
     public void OnLinkClick(int id)
     {
-        LinkGroup.LinkOptions.ForEach(l => l.IsSelected = false);
-        LinkGroup.LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
+        CaregoryLinkGroup.LinkOptions.ForEach(l => l.IsSelected = false);
+        CaregoryLinkGroup.LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
 
+        CurrentCategoryId = id;
         var filters = Categories.Single(c => c.Id.Equals(id)).Filters;
         FilterGroups = _mapper.Map<List<FilterGroup>>(filters);
     }
@@ -50,7 +49,20 @@ public class UIService
 
     public async Task FilterProducts()
     {
-        // Use the filters collection
+        var filterDTOs = FilterGroups.Select(group => new FilterRequestDTO
+        {
+            CategoryId = CurrentCategoryId,
+            FilterTypeId = group.FilterTypeId,
+            OptionType = group.OptionType,
+            Id = group.Id,
+            Name = group.Name,
+            Options = group.FilterOptions
+                  .Where(option => option.OptionType == group.OptionType && option.IsSelected)
+                  .Select(option => _mapper.Map<OptionGetDTO>(option))
+                  .ToList()
+        }).ToList();
+
+        Products = await _filterHttp.FilterProductsAsync(filterDTOs);
     }
 
 }
