@@ -48,11 +48,11 @@ void RegisterServices(IServiceCollection services)
 
 void RegisterEndpoints(WebApplication app)
 {
-    app.AddEndpoint<Category, CategoryPostDTO, CategoryPutDTO, CategoryGetDTO>();
     app.AddEndpoint<Filter, FilterPostDTO, FilterPutDTO, FilterGetDTO>();
-    app.AddEndpoint<FilterType, FilterTypePostDTO, FilterTypePutDTO, FilterTypeGetDTO>();
-    app.AddEndpoint<Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
     app.AddEndpoint<CategoryFilter, CategoryFilterPostDTO, CategoryFilterDeleteDTO>();
+    //app.AddEndpoint<FilterType, FilterTypePostDTO, FilterTypePutDTO, FilterTypeGetDTO>();
+    //app.AddEndpoint<Option, OptionPostDTO, OptionPutDTO, OptionGetDTO>();
+
     /*app.MapPost("/api/filterproducts", async (List<FilterRequestDTO> filterDTOs, IFilterService filterService) =>
     {
         try
@@ -88,18 +88,15 @@ void ConfigureAutoMapper(IServiceCollection services)
 {
     var config = new MapperConfiguration(cfg =>
     {
-        cfg.CreateMap<Category, CategoryPostDTO>().ReverseMap();
-        cfg.CreateMap<Category, CategoryPutDTO>().ReverseMap();
-        cfg.CreateMap<Category, CategoryGetDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterPostDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterPutDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterGetDTO>().ReverseMap();
-        cfg.CreateMap<FilterType, FilterTypePostDTO>().ReverseMap();
+        /*cfg.CreateMap<FilterType, FilterTypePostDTO>().ReverseMap();
         cfg.CreateMap<FilterType, FilterTypePutDTO>().ReverseMap();
         cfg.CreateMap<FilterType, FilterTypeGetDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionPostDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionPutDTO>().ReverseMap();
-        cfg.CreateMap<Option, OptionGetDTO>().ReverseMap();
+        cfg.CreateMap<Option, OptionGetDTO>().ReverseMap();*/
         cfg.CreateMap<CategoryFilter, CategoryFilterPostDTO>().ReverseMap();
         cfg.CreateMap<CategoryFilter, CategoryFilterDeleteDTO>().ReverseMap();
     });

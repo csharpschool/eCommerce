@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Data.Entities;
+﻿/*namespace eCommerce.Data.Entities;
 
 public class FilterType : IEntity
 {
@@ -7,3 +7,4 @@ public class FilterType : IEntity
 
     public List<Filter> Filters { get; } = [];
 }
+*/

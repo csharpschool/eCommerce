@@ -7,4 +7,7 @@ public class Product : IEntity
     public string Description { get; set; }
     public string PictureUrl { get; set; }
     public List<Category> Categories { get; } = [];
+    public List<Size> Sizes { get; } = [];
+    public List<Color> Colors { get; } = [];
 }
+

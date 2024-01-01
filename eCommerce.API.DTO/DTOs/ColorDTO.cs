@@ -1,10 +1,19 @@
 ﻿namespace eCommerce.API.DTO;
 
-public class OptionDTO
+public class ColorPostDTO
 {
-    public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public OptionType OptionType { get; set; }
     public bool IsSelected { get; set; }
-    //public int FilterId { get; set; }
 }
+
+public class ColorPutDTO : ColorPostDTO
+{
+    public int Id { get; set; }
+}
+
+public class ColorGetDTO : ColorPutDTO
+{
+}
+
+

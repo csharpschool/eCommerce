@@ -21,6 +21,7 @@ void RegisterServices()
     builder.Services.AddSingleton<UIService>();
     builder.Services.AddHttpClient<FilterHttpClient>();
     builder.Services.AddHttpClient<ProductHttpClient>();
+    builder.Services.AddHttpClient<CategoryHttpClient>();
     //builder.Services.AddBlazoredLocalStorageAsSingleton();
     //builder.Services.AddBlazoredSessionStorageAsSingleton();
 }
@@ -32,10 +33,10 @@ void ConfigureAutoMapper()
         cfg.CreateMap<CategoryGetDTO, LinkOption>();
         cfg.CreateMap<FilterGetDTO, FilterGroup>()
            .ForMember(dest => dest.FilterOptions, act => act.MapFrom(src => src.Options));
-
-        /*cfg.CreateMap<CategoryGetDTO, LinkOption>();
-        cfg.CreateMap<FilterGetDTO, FilterGroup>();*/
-        cfg.CreateMap<OptionGetDTO, FilterOption>().ReverseMap(); ;
+        cfg.CreateMap<OptionDTO, FilterOption>().ReverseMap();
+        /*
+        cfg.CreateMap<FilterGetDTO, FilterGroup>();
+        cfg.CreateMap<OptionGetDTO, FilterOption>().ReverseMap();*/
     });
     var mapper = config.CreateMapper();
     builder.Services.AddSingleton(mapper);

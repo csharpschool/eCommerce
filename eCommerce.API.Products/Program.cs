@@ -51,7 +51,11 @@ void RegisterServices(IServiceCollection services)
 void RegisterEndpoints(WebApplication app)
 {
     app.AddEndpoint<Product, ProductPostDTO, ProductPutDTO, ProductGetDTO>();
+    app.AddEndpoint<Size, SizePostDTO, SizePutDTO, SizeGetDTO>();
+    app.AddEndpoint<Color, ColorPostDTO, ColorPutDTO, ColorGetDTO>();
     app.AddEndpoint<ProductCategory, ProductCategoryPostDTO, ProductCategoryDeleteDTO>();
+    app.AddEndpoint<ProductSize, ProductSizePostDTO, ProductSizeDeleteDTO>();
+    app.AddEndpoint<ProductColor, ProductColorPostDTO, ProductColorDeleteDTO>();
     app.MapGet($"/api/productsbycategory/" + "{categoryId}", async (IDbService db, int categoryId) =>
     {
         try
@@ -73,9 +77,18 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<Product, ProductPostDTO>().ReverseMap();
         cfg.CreateMap<Product, ProductPutDTO>().ReverseMap();
         cfg.CreateMap<Product, ProductGetDTO>().ReverseMap();
-        cfg.CreateMap<Category, CategorySmallGetDTO>().ReverseMap();
+        cfg.CreateMap<Size, SizePostDTO>().ReverseMap();
+        cfg.CreateMap<Size, SizePutDTO>().ReverseMap();
+        cfg.CreateMap<Size, SizeGetDTO>().ReverseMap();
+        cfg.CreateMap<Color, ColorPostDTO>().ReverseMap();
+        cfg.CreateMap<Color, ColorPutDTO>().ReverseMap();
+        cfg.CreateMap<Color, ColorGetDTO>().ReverseMap();
         cfg.CreateMap<ProductCategory, ProductCategoryPostDTO>().ReverseMap();
         cfg.CreateMap<ProductCategory, ProductCategoryDeleteDTO>().ReverseMap();
+        cfg.CreateMap<ProductSize, ProductSizePostDTO>().ReverseMap();
+        cfg.CreateMap<ProductSize, ProductSizeDeleteDTO>().ReverseMap();
+        cfg.CreateMap<ProductColor, ProductColorPostDTO>().ReverseMap();
+        cfg.CreateMap<ProductColor, ProductColorDeleteDTO>().ReverseMap();
     });
     var mapper = config.CreateMapper();
     services.AddSingleton(mapper);

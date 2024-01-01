@@ -3,7 +3,7 @@
 public class FilterPostDTO
 {
     public string Name { get; set; } = string.Empty;
-    public int FilterTypeId { get; set; }
+    public string TypeName { get; set; } = string.Empty; // The filter entity/table name
     public OptionType OptionType { get; set; }
 }
 
@@ -14,11 +14,12 @@ public class FilterPutDTO : FilterPostDTO
 
 public class FilterGetDTO : FilterPutDTO
 {
-    public List<OptionGetDTO>? Options { get; set; }
+    public List<OptionDTO>? Options { get; set; }
 }
 
 public class FilterRequestDTO : FilterGetDTO
 {
     public int CategoryId { get; set; }
-
 }
+
+

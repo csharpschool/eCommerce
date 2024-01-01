@@ -1,0 +1,6 @@
+@eCommerce.API.Categories_HostAddress = http://localhost:6500
+
+GET {{eCommerce.API.Categories_HostAddress}}/category/
+Accept: application/json
+
+###

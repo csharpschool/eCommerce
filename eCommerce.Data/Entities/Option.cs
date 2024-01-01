@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Data.Entities;
+﻿/*namespace eCommerce.Data.Entities;
 
 public class Option : IEntity
 {
@@ -10,3 +10,4 @@ public class Option : IEntity
     public int FilterId { get; set; }
     public Filter? Filter { get; }
 }
+*/

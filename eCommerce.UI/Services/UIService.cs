@@ -4,6 +4,7 @@ public class UIService
 {
     private readonly FilterHttpClient _filterHttp;
     private readonly ProductHttpClient _productHttp;
+    private readonly CategoryHttpClient _categoryHttp;
     private readonly IMapper _mapper;
 
     List<CategoryGetDTO> Categories { get; set; } = [];
@@ -15,16 +16,17 @@ public class UIService
     };
     public int CurrentCategoryId { get; set; }
 
-    public UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, IMapper mapper)
+    public UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, CategoryHttpClient categoryHttp, IMapper mapper)
     {
         _filterHttp = filterHttp;
         _productHttp = productHttp;
+        _categoryHttp = categoryHttp;
         _mapper = mapper;
     }
 
     public async Task GetLinkGroup()
     {
-        Categories = await _filterHttp.GetCategoriesAsync();
+        Categories = await _categoryHttp.GetCategoriesAsync();
         CaregoryLinkGroup.LinkOptions = _mapper.Map<List<LinkOption>>(Categories);
         var linkOption = CaregoryLinkGroup.LinkOptions.FirstOrDefault();
 
@@ -49,7 +51,7 @@ public class UIService
 
     public async Task FilterProducts()
     {
-        var filterDTOs = FilterGroups.Select(group => new FilterRequestDTO
+        /*var filterDTOs = FilterGroups.Select(group => new FilterRequestDTO
         {
             CategoryId = CurrentCategoryId,
             FilterTypeId = group.FilterTypeId,
@@ -62,7 +64,7 @@ public class UIService
                   .ToList()
         }).ToList();
 
-        Products = await _filterHttp.FilterProductsAsync(filterDTOs);
+        Products = await _filterHttp.FilterProductsAsync(filterDTOs);*/
     }
 
 }
