@@ -10,7 +10,6 @@ public class FilterHttpClient
     public FilterHttpClient(HttpClient httpClient)
     {
         Client = httpClient;
-        //Client.BaseAddress = new Uri("https://localhost:5501/api/categorys");
         Client.BaseAddress = new Uri($"{baseAddress}filters");
     }
 

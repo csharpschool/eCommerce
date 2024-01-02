@@ -1,28 +1,40 @@
-﻿@inject UIService service
-
-<section class="d-flex flex-wrap p-3 pt-2 align-items-start">
-    @foreach(var product in service.Products)
+﻿<section class="d-flex flex-wrap p-3 pt-2 align-items-start">
+    @if (Products is not null)
     {
-        <div class="card mb-3 me-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="@product.PictureUrl" class="img-fluid rounded-start" />
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.Description</p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+        @foreach (var product in Products)
+        {
+            <div class="card mb-3 me-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="@product.PictureUrl" class="img-fluid rounded-start" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     }
 </section>
 
 @code {
+    [CascadingParameter(Name = "Service")] public UIService? Service { get; set; }
+    [Parameter] public EventCallback OnChange { get; set; }
+    List<ProductGetDTO>? Products { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (Service is not null)
+            Products = Service.Products;
+    }
+
     protected override async Task OnInitializedAsync()
     {
-        await service.GetProductsAsync(1);
+        if (Service is not null)
+            await Service.GetProductsAsync(1);
     }
 }

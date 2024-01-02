@@ -1,18 +1,37 @@
 ﻿@page "/"
+@inject UIService service
 
 <PageTitle>eCommerce</PageTitle>
 
 <MenuComponent></MenuComponent>
 
 <section id="viewport" class="d-flex vh-100">
-    <div class="flex-shrink-1">
-        <doc>
-            <AsideComponent></AsideComponent>
-        </doc>
-    </div>
-    <div class="flex-wrap w-100 pt-3">
-        <ProductComponent></ProductComponent>
-    </div>
+    @if (Service is not null)
+    {
+        <CascadingValue Value="Service" Name="Service">
+            <div class="flex-shrink-1">
+                <doc>
+                    <AsideComponent OnChange="OnChange"></AsideComponent>
+                </doc>
+            </div>
+            <div class="flex-wrap w-100 pt-3">
+                <ProductComponent OnChange="OnChange"></ProductComponent>
+            </div>
+        </CascadingValue>
+    }
 </section>
 
+@code{
+    [CascadingParameter]
+    public UIService? Service { get; set; }
 
+    protected override void OnParametersSet()
+    {
+        Service = service;
+    }
+
+    void OnChange()
+    {
+        //StateHasChanged();
+    }
+}

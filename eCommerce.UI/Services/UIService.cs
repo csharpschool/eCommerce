@@ -51,20 +51,20 @@ public class UIService
 
     public async Task FilterProducts()
     {
-        /*var filterDTOs = FilterGroups.Select(group => new FilterRequestDTO
+        var filterDTOs = FilterGroups.Select(group => new FilterRequestDTO
         {
             CategoryId = CurrentCategoryId,
-            FilterTypeId = group.FilterTypeId,
             OptionType = group.OptionType,
             Id = group.Id,
             Name = group.Name,
+            TypeName = group.TypeName,
             Options = group.FilterOptions
                   .Where(option => option.OptionType == group.OptionType && option.IsSelected)
-                  .Select(option => _mapper.Map<OptionGetDTO>(option))
+                  .Select(option => _mapper.Map<OptionDTO>(option))
                   .ToList()
         }).ToList();
 
-        Products = await _filterHttp.FilterProductsAsync(filterDTOs);*/
+        Products = await _filterHttp.FilterProductsAsync(filterDTOs);
     }
 
 }

@@ -1,20 +1,32 @@
-﻿@inject UIService service
+﻿<aside id="aside-menu" class="d-flex flex-column m-2 ms-0 mt-0 p-2 pt-0 bg-body-tertiary vh-100" style="min-width:160px; max-width:200px;">
+    <LinkComponent LinkGroup="Service?.CaregoryLinkGroup" OnLinkClick="Service!.OnLinkClick"></LinkComponent>
 
-<aside id="aside-menu" class="d-flex flex-column m-2 ms-0 mt-0 p-2 pt-0 bg-body-tertiary vh-100" style="min-width:160px; max-width:200px;">
-    <LinkComponent LinkGroup="service.CaregoryLinkGroup" OnLinkClick="service.OnLinkClick"></LinkComponent>
-
-    @foreach (var group in service.FilterGroups)
+    @foreach (var group in Service.FilterGroups)
     {
         <FilterComponent FilterGroup="group"></FilterComponent>
     }
 
-    <button class="btn btn-outline-primary rounded-0 mt-2" @onclick="service.FilterProducts">Apply Filter</button>
+    <button class="btn btn-outline-primary rounded-0 mt-2" @onclick="FilterProducts">Apply Filter</button>
 </aside>
 
 @code {
+    //TODO: Add event to trigger update in the products component after filtering
+    [CascadingParameter(Name = "Service")] public UIService? Service { get; set; }
+    [Parameter] public EventCallback OnChange { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        await service.GetLinkGroup();
+        if (Service is not null)
+            await Service.GetLinkGroup();
     }
+
+    async Task FilterProducts()
+    {
+        if (Service is not null)
+        {
+            await Service.FilterProducts();
+            await OnChange.InvokeAsync();
+        }
+    }
+
 }

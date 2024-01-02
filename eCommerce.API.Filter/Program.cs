@@ -67,13 +67,11 @@ void RegisterEndpoints(WebApplication app)
             return Results.Problem(ex.Message);
         }
     });*/
-    app.MapPost("/api/filterproducts", async (List<FilterRequestDTO> filterDTOs) =>
+    app.MapPost("/api/filterproducts", async (List<FilterRequestDTO> filterDTOs, IDbService db) =>
     {
         try
         {
-            //TODO: Implement a filtering service
-            // See commented out code above for injection example
-            return Results.Ok();
+            return Results.Ok(await ((FilterDbService)db).FilterProducts(filterDTOs));
         }
         catch (Exception ex)
         {
@@ -91,6 +89,7 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<Filter, FilterPostDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterPutDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterGetDTO>().ReverseMap();
+        cfg.CreateMap<Product, ProductGetDTO>().ReverseMap();
         /*cfg.CreateMap<FilterType, FilterTypePostDTO>().ReverseMap();
         cfg.CreateMap<FilterType, FilterTypePutDTO>().ReverseMap();
         cfg.CreateMap<FilterType, FilterTypeGetDTO>().ReverseMap();

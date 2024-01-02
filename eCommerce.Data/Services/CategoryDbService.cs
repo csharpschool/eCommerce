@@ -1,7 +1,4 @@
 ﻿using eCommerce.API.DTO;
-using eCommerce.Data.Shared.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace eCommerce.Data.Services;
 
@@ -9,7 +6,6 @@ public class CategoryDbService(ECommerceContext db, IMapper mapper) : DbService(
 {
     public override async Task<List<TDto>> GetAsync<TEntity, TDto>()
     {
-        await GetCategoriesWithAllRelatedDataAsync();
         IncludeNavigationsFor<Filter>();
         IncludeNavigationsFor<Product>();
         var result = await base.GetAsync<TEntity, TDto>();

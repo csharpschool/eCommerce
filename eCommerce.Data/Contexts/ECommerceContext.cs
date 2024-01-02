@@ -50,14 +50,26 @@ public class ECommerceContext(DbContextOptions<ECommerceContext> options) : DbCo
         #endregion*/
 
         #region ProductCategory Many-to-Many Relationship
-        builder.Entity<ProductCategory>()
-               .HasKey(cf => new { cf.CategoryId, cf.ProductId }); // Composite key
-
         builder.Entity<Product>()
             .HasMany(p => p.Categories)
             .WithMany(c => c.Products)
             .UsingEntity<ProductCategory>();
         #endregion
+
+        #region ProductSize Many-to-Many Relationship
+        builder.Entity<Product>()
+            .HasMany(p => p.Sizes)
+            .WithMany(c => c.Products)
+            .UsingEntity<ProductSize>();
+        #endregion
+
+        #region ProductColor Many-to-Many Relationship
+        builder.Entity<Product>()
+            .HasMany(p => p.Colors)
+            .WithMany(c => c.Products)
+            .UsingEntity<ProductColor>();
+        #endregion
+
     }
 }
 
