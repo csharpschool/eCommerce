@@ -16,7 +16,12 @@
 @code{
     [CascadingParameter(Name = "Cart")] public CartService? Cart { get; set; }
 
-    void OnRemoveItem()
+    void OnRemoveItem(CartItemDTO item) => Cart?.RemoveFromCart(item);
+
+    protected override async Task OnParametersSetAsync()
     {
+        if(Cart is not null)
+            await Cart.GetToCart();
     }
+
 }

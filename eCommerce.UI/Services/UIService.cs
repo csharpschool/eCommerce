@@ -6,8 +6,7 @@ public class UIService
     private readonly ProductHttpClient _productHttp;
     private readonly CategoryHttpClient _categoryHttp;
     private readonly IMapper _mapper;
-    public CartService Cart { get; } = new();
-    
+    public CartService Cart { get; }
 
     List<CategoryGetDTO> Categories { get; set; } = [];
     public List<ProductGetDTO> Products { get; private set; } = [];

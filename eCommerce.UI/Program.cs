@@ -1,7 +1,3 @@
-using Blazored.LocalStorage;
-using Blazored.SessionStorage;
-using eCommerce.Storage.WebAssembly.Services;
-using eCommerce.UI.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

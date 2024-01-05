@@ -76,7 +76,7 @@
     {
         try
         {
-            Service.Cart.AddToCart();
+            await Service.Cart.AddToCart();
             await OnChange.InvokeAsync();
         }
         catch (Exception ex)

@@ -4,4 +4,8 @@ global using eCommerce.UI.Http.Clients;
 global using eCommerce.UI.Razor.Services;
 global using eCommerce.UI.Models.Filter;
 global using eCommerce.UI.Models.Links;
+global using eCommerce.UI.Services;
 global using eCommerce.API.DTO;
+global using Blazored.LocalStorage;
+global using Blazored.SessionStorage;
+global using eCommerce.Storage.WebAssembly.Services;

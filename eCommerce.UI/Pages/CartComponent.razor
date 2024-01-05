@@ -29,9 +29,7 @@
 
     async Task OnRemove(CartItemDTO item)
     {
-        Cart?.Remove(item);
-
         if (OnRemoveItem.HasDelegate)
-            await OnRemoveItem.InvokeAsync();
+            await OnRemoveItem.InvokeAsync(item);
     }
 }
