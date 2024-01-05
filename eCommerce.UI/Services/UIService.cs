@@ -51,24 +51,6 @@ public class UIService
     }
 
     public async Task GetProductsAsync() => Products = await _productHttp.GetProductsAsync(CurrentCategoryId);
-    
-/*    public async Task FilterProducts()
-    {
-        var filterDTOs = FilterGroups.Select(group => new FilterRequestDTO
-        {
-            CategoryId = CurrentCategoryId,
-            OptionType = group.OptionType,
-            Id = group.Id,
-            Name = group.Name,
-            TypeName = group.TypeName,
-            Options = group.FilterOptions
-                  .Where(option => option.OptionType == group.OptionType && option.IsSelected)
-                  .Select(option => _mapper.Map<OptionDTO>(option))
-                  .ToList()
-        }).ToList();
-
-        Products = await _filterHttp.FilterProductsAsync(filterDTOs);
-    }*/
 
     public async Task FilterProducts()
     {
