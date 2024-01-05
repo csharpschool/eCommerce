@@ -1,7 +1,7 @@
 ﻿<aside id="aside-menu" class="d-flex flex-column m-2 ms-0 mt-0 p-2 pt-0 bg-body-tertiary vh-100" style="min-width:160px; max-width:200px;">
     @foreach (var group in Service.CaregoryLinkGroups)
     {
-        <LinkComponent LinkGroup="group" OnLinkClick="Service!.OnLinkClick"></LinkComponent>
+        <LinkComponent LinkGroup="group" OnLinkClick="OnLinkClick"></LinkComponent>
     }
 
     @foreach (var group in Service.FilterGroups)
@@ -17,10 +17,23 @@
     [CascadingParameter(Name = "Service")] public UIService? Service { get; set; }
     [Parameter] public EventCallback OnChange { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
         if (Service is not null)
+        {
             await Service.GetLinkGroup();
+            await OnChange.InvokeAsync();
+        }
+    }
+
+    async Task OnLinkClick(int id)
+    {
+        if (Service is not null)
+        {
+            await Service.OnLinkClick(id);
+            //await Service.GetProductsAsync();
+            await OnChange.InvokeAsync();
+        }
     }
 
     async Task FilterProducts()
@@ -31,5 +44,4 @@
             await OnChange.InvokeAsync();
         }
     }
-
 }

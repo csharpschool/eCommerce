@@ -59,18 +59,21 @@
     [CascadingParameter(Name = "Service")] public UIService Service { get; set; }
     [Parameter] public EventCallback OnChange { get; set; }
     List<ProductGetDTO>? Products { get; set; }
-    
+
     protected override void OnParametersSet()
     {
         if (Service is not null)
             Products = Service.Products;
     }
 
-    protected override async Task OnInitializedAsync()
+    /*protected override async Task OnInitializedAsync()
     {
         if (Service is not null)
-            await Service.GetProductsAsync(1);
-    }
+        {
+            Service.CurrentCategoryId = 1;
+            await Service.GetProductsAsync();
+        }
+    }*/
 
     async Task AddToCart()
     {
