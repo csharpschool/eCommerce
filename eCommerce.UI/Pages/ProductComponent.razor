@@ -3,17 +3,51 @@
     {
         @foreach (var product in Products)
         {
-            <div class="card mb-3 me-3" style="max-width: 540px;">
+            <div id="@product.Id" class="card mb-3 me-3 rounded-0" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-4">
                         <img src="@product.PictureUrl" class="img-fluid rounded-start" />
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
+                        <div class="card-body pb-2">
                             <h5 class="card-title">@product.Name</h5>
                             <p class="card-text">@product.Description</p>
-                            <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                            @* <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> *@
                         </div>
+
+                    </div>
+                    <div class="card-footer bg-white border-top-0 ps-2 pt-0 d-flex justify-content-start">
+                        @if (product.Sizes is not null)
+                        {
+                            <div class="btn-group me-2" role="group" aria-label="Basic radio toggle button group">
+                                @foreach (var size in product.Sizes)
+                                {
+                                    <input type="radio" class="btn-check" name="size-@product.Id" id="size-@product.Id-@size.Id"
+                                           autocomplete="off" @onchange="() => Service.Cart.SelectSize(product, size)">
+                                    <label class="btn btn-sm btn-outline-primary" for="size-@product.Id-@size.Id">@size.Name</label>
+                                }
+                            </div>
+                        }
+                        @if (product.Colors is not null)
+                        {
+                            <div class="btn-group me-2" role="group" aria-label="Basic radio toggle button group">
+                                @foreach (var color in product.Colors)
+                                {
+                                    <input type="radio" class="btn-check" name="color-@product.Id" id="color-@product.Id-@color.Id"
+                                           autocomplete="off" @onchange="() => Service.Cart.SelectColor(product, color)">
+                                    @* <label class="btn btn-sm btn-outline-primary " style="background-color:@color.ColorHex" for="color-@product.Id-@color.Id">@color.Name</label> *@
+
+                                    @* <label class="btn btn-sm btn-outline-primary"
+                                           style="background-color:@color.BackgroundColorHex; color:@(color.IsSelected ? color.CheckedColorHex : color.ColorHex)"
+                                           for="color-@product.Id-@color.Id">@color.Name</label> *@
+                                    <label class="btn btn-sm btn-outline-primary"
+                                           style="background-color:@color.BkColorHex; color:@(color.IsSelected ? @color.ColorHex : @color.BkColorHex)"
+                                           for="color-@product.Id-@color.Id"><i class="bi-check"></i></label>
+                                }
+                            </div>
+                        }
+
+                        <button class="btn btn-sm btn-success" @onclick="AddToCart"><i class="bi-cart"></i></button>
                     </div>
                 </div>
             </div>
@@ -22,10 +56,10 @@
 </section>
 
 @code {
-    [CascadingParameter(Name = "Service")] public UIService? Service { get; set; }
+    [CascadingParameter(Name = "Service")] public UIService Service { get; set; }
     [Parameter] public EventCallback OnChange { get; set; }
     List<ProductGetDTO>? Products { get; set; }
-
+    
     protected override void OnParametersSet()
     {
         if (Service is not null)
@@ -37,4 +71,18 @@
         if (Service is not null)
             await Service.GetProductsAsync(1);
     }
+
+    async Task AddToCart()
+    {
+        try
+        {
+            Service.Cart.AddToCart();
+            await OnChange.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            // Display error message
+        }
+    }
+
 }

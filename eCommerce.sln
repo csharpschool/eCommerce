@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerce.API.Products", "e
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerce.Storage.WebAssembly", "eCommerce.Storage.WebAssembly\eCommerce.Storage.WebAssembly.csproj", "{B49890D5-8791-4E33-A72D-5E5F63B6A2B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.API.Categories", "eCommerce.API.Categories\eCommerce.API.Categories.csproj", "{29719D66-B766-4BD4-9FDC-9D2AC8D6E79F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eCommerce.API.Categories", "eCommerce.API.Categories\eCommerce.API.Categories.csproj", "{29719D66-B766-4BD4-9FDC-9D2AC8D6E79F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

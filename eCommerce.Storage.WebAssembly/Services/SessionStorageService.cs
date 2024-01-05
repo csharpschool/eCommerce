@@ -2,15 +2,14 @@
 
 namespace eCommerce.Storage.WebAssembly.Services;
 
-public class SessionStorageService(ISessionStorageService localStorage) : IStorageService
+public class SessionStorageService(ISessionStorageService sessionStorage) : IStorageService
 {
     public async Task<T> GetAsync<T>(string key) =>
-        await localStorage.GetItemAsync<T>(key);
-
+        await sessionStorage.GetItemAsync<T>(key);
 
     public async Task RemoveAsync(string key) =>
-        await localStorage.RemoveItemAsync(key);
+        await sessionStorage.RemoveItemAsync(key);
 
     public async Task SetAsync<T>(string key, T value) =>
-        await localStorage.SetItemAsync(key, value);
+        await sessionStorage.SetItemAsync(key, value);
 }

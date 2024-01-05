@@ -6,29 +6,32 @@ public class UIService
     private readonly ProductHttpClient _productHttp;
     private readonly CategoryHttpClient _categoryHttp;
     private readonly IMapper _mapper;
+    public CartService Cart { get; } = new();
+    
 
     List<CategoryGetDTO> Categories { get; set; } = [];
     public List<ProductGetDTO> Products { get; private set; } = [];
     public List<FilterGroup> FilterGroups { get; private set; } = [];
-    public LinkGroup CaregoryLinkGroup { get; private set; } = new()
-    {
-        Name = "Categories"
-    };
+    public List<LinkGroup> CaregoryLinkGroups { get; private set; } =
+    [
+        new LinkGroup { Name = "Categories" }
+    ];
     public int CurrentCategoryId { get; set; }
 
-    public UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, CategoryHttpClient categoryHttp, IMapper mapper)
+    public UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, CategoryHttpClient categoryHttp, IMapper mapper, CartService cart)
     {
         _filterHttp = filterHttp;
         _productHttp = productHttp;
         _categoryHttp = categoryHttp;
         _mapper = mapper;
+        Cart = cart;
     }
 
     public async Task GetLinkGroup()
     {
         Categories = await _categoryHttp.GetCategoriesAsync();
-        CaregoryLinkGroup.LinkOptions = _mapper.Map<List<LinkOption>>(Categories);
-        var linkOption = CaregoryLinkGroup.LinkOptions.FirstOrDefault();
+        CaregoryLinkGroups[0].LinkOptions = _mapper.Map<List<LinkOption>>(Categories);
+        var linkOption = CaregoryLinkGroups[0].LinkOptions.FirstOrDefault();
 
         if (linkOption is not null)
             OnLinkClick(linkOption.Id);
@@ -36,8 +39,8 @@ public class UIService
 
     public void OnLinkClick(int id)
     {
-        CaregoryLinkGroup.LinkOptions.ForEach(l => l.IsSelected = false);
-        CaregoryLinkGroup.LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
+        CaregoryLinkGroups[0].LinkOptions.ForEach(l => l.IsSelected = false);
+        CaregoryLinkGroups[0].LinkOptions.Single(l => l.Id.Equals(id)).IsSelected = true;
 
         CurrentCategoryId = id;
         var filters = Categories.Single(c => c.Id.Equals(id)).Filters;

@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
+using eCommerce.Storage.WebAssembly.Services;
 using eCommerce.UI.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -17,13 +18,16 @@ await builder.Build().RunAsync();
 void RegisterServices()
 {
     ConfigureAutoMapper();
+    builder.Services.AddBlazoredLocalStorageAsSingleton();
+    builder.Services.AddBlazoredSessionStorageAsSingleton();
+    builder.Services.AddSingleton<SessionStorageService>();
+    builder.Services.AddSingleton<LocalStorageService>();
     builder.Services.AddScoped<FilterRenderingService>();
     builder.Services.AddSingleton<UIService>();
+    builder.Services.AddSingleton<CartService>();
     builder.Services.AddHttpClient<FilterHttpClient>();
     builder.Services.AddHttpClient<ProductHttpClient>();
-    builder.Services.AddHttpClient<CategoryHttpClient>();
-    //builder.Services.AddBlazoredLocalStorageAsSingleton();
-    //builder.Services.AddBlazoredSessionStorageAsSingleton();
+    builder.Services.AddHttpClient<CategoryHttpClient>(); 
 }
 
 void ConfigureAutoMapper()

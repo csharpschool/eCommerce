@@ -1,0 +1,37 @@
+﻿<!-- Modal form from Bootstrap -->
+<div class="modal fade" id="cart" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cartLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="cartLabel">Shopping Cart</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if (Cart is not null)
+                {
+                    foreach (var item in Cart)
+                    {
+                        <CartItemComponent Item="item" OnRemove="OnRemove"></CartItemComponent>
+                    }
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+                <button type="button" class="btn btn-primary">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public List<CartItemDTO>? Cart { get; set; }
+    [Parameter] public EventCallback<CartItemDTO> OnRemoveItem { get; set; }
+
+    async Task OnRemove(CartItemDTO item)
+    {
+        Cart?.Remove(item);
+
+        if (OnRemoveItem.HasDelegate)
+            await OnRemoveItem.InvokeAsync();
+    }
+}

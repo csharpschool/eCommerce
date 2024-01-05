@@ -2,7 +2,21 @@
     <div>
         <span class="navbar-brand mb-0 h1">eCommerce</span>
     </div>
-    <div>
-        <span class="mb-0">eCommerce</span>
+    <div class="position-relative">
+        <a class="text-decoration-none text-secondary-emphasis" data-bs-toggle="modal" data-bs-target="#cart">
+            <i class="bi-cart h2"></i>
+            <span class="position-absolute top-50 start-50 translate-middle small fw-bold"><samp>@Cart?.CartItems.Count</samp></span>
+        </a>
     </div>
 </nav>
+
+<CartComponent Cart="Cart?.CartItems" OnRemoveItem="OnRemoveItem"></CartComponent>
+
+
+@code{
+    [CascadingParameter(Name = "Cart")] public CartService? Cart { get; set; }
+
+    void OnRemoveItem()
+    {
+    }
+}

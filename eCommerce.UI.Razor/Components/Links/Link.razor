@@ -7,11 +7,9 @@
 }
 
 @code {
-    [Parameter]
-    public LinkOption? LinkOption { get; set; }
-
-    [Parameter]
-    public EventCallback<int> OnLinkClick { get; set; }
+    //[CascadingParameter(Name = "LinkOption")] public LinkOption? LinkOption { get; set; }
+    [Parameter] public LinkOption? LinkOption { get; set; }
+    [Parameter] public EventCallback<int> OnLinkClick { get; set; }
 
     void OnClick()
     {

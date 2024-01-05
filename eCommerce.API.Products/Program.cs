@@ -60,7 +60,7 @@ void RegisterEndpoints(WebApplication app)
     {
         try
         {
-            return Results.Ok(await ((ProductDbService)db).GetAsync(categoryId));
+            return Results.Ok(await ((ProductDbService)db).GetProductsByCategoryAsync(categoryId));
         }
         catch
         {

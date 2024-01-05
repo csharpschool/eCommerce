@@ -7,7 +7,6 @@ public class LocalStorageService(ILocalStorageService localStorage) : IStorageSe
     public async Task<T> GetAsync<T>(string key) =>
         await localStorage.GetItemAsync<T>(key);
 
-
     public async Task RemoveAsync(string key) =>
         await localStorage.RemoveItemAsync(key);
 

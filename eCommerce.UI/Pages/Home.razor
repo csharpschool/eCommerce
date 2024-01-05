@@ -3,7 +3,9 @@
 
 <PageTitle>eCommerce</PageTitle>
 
-<MenuComponent></MenuComponent>
+<CascadingValue Value="Service?.Cart" Name="Cart">
+    <MenuComponent></MenuComponent>
+</CascadingValue>
 
 <section id="viewport" class="d-flex vh-100">
     @if (Service is not null)
@@ -25,13 +27,9 @@
     [CascadingParameter]
     public UIService? Service { get; set; }
 
-    protected override void OnParametersSet()
-    {
-        Service = service;
-    }
-
+    protected override void OnParametersSet() => Service = service;
+    
     void OnChange()
     {
-        //StateHasChanged();
     }
 }

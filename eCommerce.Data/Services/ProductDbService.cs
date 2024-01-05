@@ -7,11 +7,15 @@ public class ProductDbService(ECommerceContext db, IMapper mapper) : DbService(d
     public override async Task<List<TDto>> GetAsync<TEntity, TDto>()
     {
         IncludeNavigationsFor<Category>();
+        IncludeNavigationsFor<Color>();
+        IncludeNavigationsFor<Size>();
         var result = await base.GetAsync<TEntity, TDto>();
         return result;
     }
-    public async Task<List<ProductGetDTO>> GetAsync(int categoryId)
+    public async Task<List<ProductGetDTO>> GetProductsByCategoryAsync(int categoryId)
     {
+        IncludeNavigationsFor<Color>();
+        IncludeNavigationsFor<Size>();
         var productIds = GetAsync<ProductCategory>(pc => pc.CategoryId.Equals(categoryId))
             .Select(pc => pc.ProductId);
         var products = await GetAsync<Product>(p => productIds.Contains(p.Id)).ToListAsync();

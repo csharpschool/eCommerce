@@ -1,0 +1,32 @@
+﻿@if (Item is not null)
+{
+    <div id="@Item.ProductId" class="d-flex card mb-3 me-3 rounded-0">
+        <div class="row g-0">
+            <div class="col-md-2 p-0">
+                <img src="@Item.PictureUrl" class="img-fluid rounded-start" style="height:111px;" />
+            </div>
+            <div class="col-md-10">
+                <div class="card-body p-1 d-flex flex-column justify-content-around">
+                    <h5 class="card-title">@Item.Name</h5>
+                    <p class="card-text d-flex align-items-center">
+                        <div class="me-1">Color:</div>
+                        <div class="me-2 border border-secondary" style="background-color:@Item.Color.BkColorHex; color:@Item.Color.ColorHex; width:20px; height:20px;"></div>
+                        <div>Size: @Item.Size.Name</div>
+                    </p>
+                    <button class="btn btn-sm btn-outline-danger" @onclick="Remove">Remove</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public CartItemDTO? Item { get; set; }
+    [Parameter] public EventCallback<CartItemDTO> OnRemove { get; set; }
+
+    async Task Remove()
+    {
+        if (OnRemove.HasDelegate)
+            await OnRemove.InvokeAsync(Item);
+    }
+}

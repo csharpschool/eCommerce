@@ -90,9 +90,9 @@ void ConfigureAutoMapper(IServiceCollection services)
         cfg.CreateMap<Filter, FilterPutDTO>().ReverseMap();
         cfg.CreateMap<Filter, FilterGetDTO>().ReverseMap();
         cfg.CreateMap<Product, ProductGetDTO>().ReverseMap();
-        /*cfg.CreateMap<FilterType, FilterTypePostDTO>().ReverseMap();
-        cfg.CreateMap<FilterType, FilterTypePutDTO>().ReverseMap();
-        cfg.CreateMap<FilterType, FilterTypeGetDTO>().ReverseMap();
+        cfg.CreateMap<Size, SizeGetDTO>().ReverseMap();
+        cfg.CreateMap<Color, ColorGetDTO>().ReverseMap();
+        /*cfg.CreateMap<FilterType, FilterTypeGetDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionPostDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionPutDTO>().ReverseMap();
         cfg.CreateMap<Option, OptionGetDTO>().ReverseMap();*/

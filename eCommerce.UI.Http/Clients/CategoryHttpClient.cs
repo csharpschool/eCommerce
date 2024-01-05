@@ -4,10 +4,12 @@ public class CategoryHttpClient
 {
     public HttpClient Client { get; }
     string baseAddress = "https://localhost:6501/api/";
+    private readonly SessionStorageService _session;
 
-    public CategoryHttpClient(HttpClient httpClient)
+    public CategoryHttpClient(HttpClient httpClient, SessionStorageService session)
     {
         Client = httpClient;
+        _session = session;
         Client.BaseAddress = new Uri($"{baseAddress}categorys");
     }
 
@@ -15,16 +17,29 @@ public class CategoryHttpClient
     {
         try
         {
-            Client.BaseAddress = new Uri($"{baseAddress}categorieswithdata");
-            using HttpResponseMessage response = await Client.GetAsync("");
-            response.EnsureSuccessStatusCode();
+            var categoryData = await _session.GetAsync<CategoryStorageDTO>("CategoryData");
 
-            var result = JsonSerializer.Deserialize<List<CategoryGetDTO>>(await response.Content.ReadAsStreamAsync(),
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (categoryData is null || categoryData?.Date != DateOnly.FromDateTime(DateTime.Now.Date))
+            {
+                Client.BaseAddress = new Uri($"{baseAddress}categorieswithdata");
+                using HttpResponseMessage response = await Client.GetAsync("");
+                response.EnsureSuccessStatusCode();
 
-            return result ?? [];
+                var result = JsonSerializer.Deserialize<List<CategoryGetDTO>>(await response.Content.ReadAsStreamAsync(),
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                await _session.SetAsync<CategoryStorageDTO>("CategoryData", new()
+                {
+                    Date = DateOnly.FromDateTime(DateTime.Now.Date),
+                    Categories = [.. result]
+                }); ;
+
+                return result ?? [];
+            }
+
+            return categoryData.Categories ?? [];
         }
-        catch(Exception ex) 
+        catch(Exception ex)
         {
             return [];
         }
