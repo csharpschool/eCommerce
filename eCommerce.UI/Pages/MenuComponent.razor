@@ -21,7 +21,7 @@
     protected override async Task OnParametersSetAsync()
     {
         if(Cart is not null)
-            await Cart.GetToCart();
+            await Cart.GetCartItems();
     }
 
 }

@@ -11,6 +11,9 @@ builder.Services.AddDbContext<ECommerceContext>(
         options.UseSqlServer(
             builder.Configuration.GetConnectionString("ECommerceConnection")));
 
+/**********
+ ** CORS **
+ **********/
 builder.Services.AddCors(policy =>
 {
     policy.AddPolicy("CorsAllAccessPolicy", opt =>
@@ -20,10 +23,16 @@ builder.Services.AddCors(policy =>
     );
 });
 
+/***********************
+ ** Register Services **
+ ***********************/
 RegisterServices(builder.Services);
 
 var app = builder.Build();
 
+/****************************
+ ** Register API Endpoints **
+ ****************************/
 RegisterEndpoints(app);
 
 // Configure the HTTP request pipeline.
@@ -35,11 +44,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Configure CORRS
+/************************
+ ** CORS Configuration **
+ ************************/
 app.UseCors("CorsAllAccessPolicy");
 
 app.Run();
 
+/*************
+ ** METHODS **
+ *************/
 void RegisterServices(IServiceCollection services)
 {
     ConfigureAutoMapper(builder.Services);

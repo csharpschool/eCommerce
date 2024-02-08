@@ -1,12 +1,8 @@
 ﻿namespace eCommerce.UI.Services;
 
-public class UIService
+public class UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, CategoryHttpClient categoryHttp, IMapper mapper, CartService cart)
 {
-    private readonly FilterHttpClient _filterHttp;
-    private ProductHttpClient _productHttp;
-    private readonly CategoryHttpClient _categoryHttp;
-    private readonly IMapper _mapper;
-    public CartService Cart { get; }
+    public CartService Cart { get; } = cart;
 
     List<CategoryGetDTO> Categories { get; set; } = [];
     public List<ProductGetDTO> Products { get; private set; } = [];
@@ -17,19 +13,10 @@ public class UIService
     ];
     public int CurrentCategoryId { get; set; }
 
-    public UIService(FilterHttpClient filterHttp, ProductHttpClient productHttp, CategoryHttpClient categoryHttp, IMapper mapper, CartService cart)
-    {
-        _filterHttp = filterHttp;
-        _productHttp = productHttp;
-        _categoryHttp = categoryHttp;
-        _mapper = mapper;
-        Cart = cart;
-    }
-
     public async Task GetLinkGroup()
     {
-        Categories = await _categoryHttp.GetCategoriesAsync();
-        CaregoryLinkGroups[0].LinkOptions = _mapper.Map<List<LinkOption>>(Categories);
+        Categories = await categoryHttp.GetCategoriesAsync();
+        CaregoryLinkGroups[0].LinkOptions = mapper.Map<List<LinkOption>>(Categories);
         var linkOption = CaregoryLinkGroups[0].LinkOptions.FirstOrDefault();
 
         if (linkOption is not null)
@@ -47,10 +34,10 @@ public class UIService
         CaregoryLinkGroups[0].LinkOptions.Single(l => l.Id.Equals(CurrentCategoryId)).IsSelected = true;
 
         var filters = Categories.Single(c => c.Id.Equals(CurrentCategoryId)).Filters;
-        FilterGroups = _mapper.Map<List<FilterGroup>>(filters);
+        FilterGroups = mapper.Map<List<FilterGroup>>(filters);
     }
 
-    public async Task GetProductsAsync() => Products = await _productHttp.GetProductsAsync(CurrentCategoryId);
+    public async Task GetProductsAsync() => Products = await productHttp.GetProductsAsync(CurrentCategoryId);
 
     public async Task FilterProducts()
     {
@@ -65,12 +52,12 @@ public class UIService
                 TypeName = group.TypeName,
                 Options = group.FilterOptions
                     .Where(option => option.OptionType == group.OptionType && option.IsSelected)
-                    .Select(option => _mapper.Map<OptionDTO>(option))
+                    .Select(option => mapper.Map<OptionDTO>(option))
                     .ToList()
             }).ToList();
 
         if(filterDTOs.Count > 0)
-            Products = await _filterHttp.FilterProductsAsync(filterDTOs);
+            Products = await filterHttp.FilterProductsAsync(filterDTOs);
     }
 
 }

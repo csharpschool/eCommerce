@@ -41,7 +41,7 @@ public class CartService
     }
 
     public async Task SaveCart() => await _storage.SetAsync("Cart", CartItems);
-    public async Task GetToCart() => CartItems = await _storage.GetAsync< List<CartItemDTO>>("Cart") ?? [];
+    public async Task GetCartItems() => CartItems = await _storage.GetAsync< List<CartItemDTO>>("Cart") ?? [];
     public async Task RemoveFromCart(CartItemDTO item)
     {
         CartItems.Remove(item);
